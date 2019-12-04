@@ -1,6 +1,7 @@
 package com.silang.superfileview;
 
 import android.Manifest;
+import android.annotation.SuppressLint;
 import android.content.res.AssetFileDescriptor;
 import android.net.Uri;
 import android.support.v7.app.AppCompatActivity;
@@ -13,6 +14,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.silang.superfileview.R;
+import com.silang.superfileview.calendar.mutl.MultiActivity;
 
 import java.io.FileReader;
 import java.io.IOException;
@@ -26,15 +28,23 @@ public class MainActivity extends AppCompatActivity {
     RecyclerView mRecyclerView;
     private String filePath;
     private List<String> datas = new ArrayList<>();
-    private List<String> paths = new ArrayList<>();
 
+    @SuppressLint("ResourceAsColor")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         initDatas();
         initPaths();
-
+        MyToolbarView myToolbarView = (MyToolbarView) findViewById(R.id.toolbar_ttt);
+        myToolbarView.setBackgroundColor(R.color.colorPrimaryDark);
+        myToolbarView.title.setText("哈哈哈哈");
+        myToolbarView.backImg.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
         mRecyclerView = (RecyclerView) findViewById(R.id.mRecyclerView);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         mRecyclerView.setAdapter(new RecyclerView.Adapter() {
@@ -51,14 +61,19 @@ public class MainActivity extends AppCompatActivity {
                 holder.itemView.findViewById(R.id.item_root).setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        String[] perms = new String[]{Manifest.permission.READ_EXTERNAL_STORAGE,
-                                Manifest.permission.WRITE_EXTERNAL_STORAGE};
-                        filePath = getFilePath(position);
-                        if (!EasyPermissions.hasPermissions(MainActivity.this, perms)) {
-                            EasyPermissions.requestPermissions(MainActivity.this, "需要访问手机存储权限！", 10086, perms);
-                        } else {
-                            FileDisplayActivity.show(MainActivity.this, filePath);
+                        if ("calendar".equals(datas.get(position))){
+                            MultiActivity.show(MainActivity.this);
+                        }else {
+                            String[] perms = new String[]{Manifest.permission.READ_EXTERNAL_STORAGE,
+                                    Manifest.permission.WRITE_EXTERNAL_STORAGE};
+                            filePath = getFilePath(position);
+                            if (!EasyPermissions.hasPermissions(MainActivity.this, perms)) {
+                                EasyPermissions.requestPermissions(MainActivity.this, "需要访问手机存储权限！", 10086, perms);
+                            } else {
+                                FileDisplayActivity.show(MainActivity.this, filePath);
+                            }
                         }
+
                     }
                 });
                 ((TextView) holder.itemView.findViewById(R.id.item_tv)).setText(getDatas().get(position));
@@ -88,6 +103,7 @@ public class MainActivity extends AppCompatActivity {
 
 
         datas.add("打开本地pdf文件");
+        datas.add("calendar");
     }
 
     private List<String> getDatas() {
@@ -110,24 +126,24 @@ public class MainActivity extends AppCompatActivity {
                 break;
             case 1:
 
-                path =  "/storage/emulated/0/test.docx";
+                path = "/storage/emulated/0/test/test.docx";
 
                 break;
 
 
             case 2:
-                path = "/storage/emulated/0/test.txt";
+                path = "/storage/emulated/0/test/test.txt";
                 break;
 
             case 3:
-                path = "/storage/emulated/0/test.xlsx";
+                path = "/storage/emulated/0/test/test.xlsx";
                 break;
             case 4:
-                path = "/storage/emulated/0/test.pptx";
+                path = "/storage/emulated/0/test/test.pptx";
                 break;
 
             case 5:
-                path = "/storage/emulated/0/test.pdf";
+                path = "/storage/emulated/0/test/test.pdf";
                 break;
         }
         return path;

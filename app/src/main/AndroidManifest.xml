@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="com.silang.superfileview">
 
     <!-- 用于访问网络，网络定位需要上网 -->
@@ -26,6 +27,10 @@
         <activity
             android:name=".FileDisplayActivity"
              />
+        <activity android:name=".calendar.mutl.MultiActivity" />
+        <!--<activity android:name="com.haibin.calendarviewproject.MainActivity" />-->
+        <!--<activity android:name="com.haibin.calendarviewproject.CalendarActivity" />-->
+        <!--<activity android:name="com.haibin.calendarviewproject.colorful.ColorfulActivity" />-->
     </application>
 
 </manifest>
