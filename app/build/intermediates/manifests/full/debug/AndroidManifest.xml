@@ -32,6 +32,7 @@
         </activity>
         <activity android:name="com.silang.superfileview.FileDisplayActivity" />
         <activity android:name="com.silang.superfileview.calendar.mutl.MultiActivity" />
+        <activity android:name="com.silang.superfileview.calendar.single.SingleActivity" />
         <!-- <activity android:name="com.haibin.calendarviewproject.MainActivity" /> -->
         <!-- <activity android:name="com.haibin.calendarviewproject.CalendarActivity" /> -->
         <!-- <activity android:name="com.haibin.calendarviewproject.colorful.ColorfulActivity" /> -->

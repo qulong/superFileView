@@ -6,6 +6,7 @@ import android.graphics.Paint;
 
 import com.dy.lib_calendar.Calendar;
 import com.dy.lib_calendar.MultiMonthView;
+import com.dy.lib_calendar.MyMonthView;
 
 
 /**
@@ -13,7 +14,7 @@ import com.dy.lib_calendar.MultiMonthView;
  * Created by huanghaibin on 2017/11/15.
  */
 
-public class CustomMultiMonthView extends MultiMonthView {
+public class CustomMultiMonthView extends MyMonthView {
 
     private int mRadius;
 
@@ -29,7 +30,7 @@ public class CustomMultiMonthView extends MultiMonthView {
     }
 
     @Override
-    protected boolean onDrawSelected(Canvas canvas, Calendar calendar, int x, int y, boolean hasScheme,
+    protected boolean onDrawScheme(Canvas canvas, Calendar calendar, int x, int y, boolean hasScheme,
                                      boolean isSelectedPre, boolean isSelectedNext) {
         int cx = x + mItemWidth / 2;
         int cy = y + mItemHeight / 2;
@@ -52,9 +53,12 @@ public class CustomMultiMonthView extends MultiMonthView {
     }
 
     @Override
-    protected void onDrawScheme(Canvas canvas, Calendar calendar, int x, int y, boolean isSelected) {
+    protected void onDrawSelected(Canvas canvas, Calendar calendar, int x, int y, boolean isSelected) {
         int cx = x + mItemWidth / 2;
         int cy = y + mItemHeight / 2;
+        mSchemePaint.setStyle(Paint.Style.STROKE);
+//        mSchemePaint.setStrokeWidth(2);
+//        mSchemePaint.setColor(0xffefefef);
         canvas.drawCircle(cx, cy, mRadius, mSchemePaint);
     }
 

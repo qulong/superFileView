@@ -15,6 +15,7 @@ import android.widget.TextView;
 
 import com.silang.superfileview.R;
 import com.silang.superfileview.calendar.mutl.MultiActivity;
+import com.silang.superfileview.calendar.single.SingleActivity;
 
 import java.io.FileReader;
 import java.io.IOException;
@@ -63,6 +64,8 @@ public class MainActivity extends AppCompatActivity {
                     public void onClick(View v) {
                         if ("calendar".equals(datas.get(position))){
                             MultiActivity.show(MainActivity.this);
+                        }else if ("SingleActivity".equals(datas.get(position))){
+                            SingleActivity.show(MainActivity.this);
                         }else {
                             String[] perms = new String[]{Manifest.permission.READ_EXTERNAL_STORAGE,
                                     Manifest.permission.WRITE_EXTERNAL_STORAGE};
@@ -104,6 +107,7 @@ public class MainActivity extends AppCompatActivity {
 
         datas.add("打开本地pdf文件");
         datas.add("calendar");
+        datas.add("SingleActivity");
     }
 
     private List<String> getDatas() {

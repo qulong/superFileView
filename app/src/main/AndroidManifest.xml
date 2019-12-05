@@ -28,6 +28,7 @@
             android:name=".FileDisplayActivity"
              />
         <activity android:name=".calendar.mutl.MultiActivity" />
+        <activity android:name=".calendar.single.SingleActivity" />
         <!--<activity android:name="com.haibin.calendarviewproject.MainActivity" />-->
         <!--<activity android:name="com.haibin.calendarviewproject.CalendarActivity" />-->
         <!--<activity android:name="com.haibin.calendarviewproject.colorful.ColorfulActivity" />-->

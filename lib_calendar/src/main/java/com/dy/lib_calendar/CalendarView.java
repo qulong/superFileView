@@ -1232,9 +1232,11 @@ public class CalendarView extends FrameLayout {
     public final void setSchemeDate(Map<String, Calendar> mSchemeDates) {
         this.mDelegate.mSchemeDatesMap = mSchemeDates;
         this.mDelegate.updateSelectCalendarScheme();
+//        this.mDelegate.mSelectedCalendars.putAll(mSchemeDates);
         this.mYearViewPager.update();
         this.mMonthPager.updateScheme();
         this.mWeekPager.updateScheme();
+
     }
 
     /**

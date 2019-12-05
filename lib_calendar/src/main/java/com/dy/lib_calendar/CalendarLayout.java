@@ -222,6 +222,7 @@ public class CalendarLayout extends LinearLayout {
      * @param week week
      */
     final void updateSelectWeek(int week) {
+        mDelegate.getCurrentDay().getWeek();
         mViewPagerTranslateY = (week - 1) * mItemHeight;
     }
 
