@@ -49,4 +49,18 @@
         android:visibility="gone"
         app:layout_constraintRight_toRightOf="parent"
         tools:text="右边文字" />
+    <LinearLayout
+        android:layout_width="wrap_content"
+        app:layout_constraintRight_toRightOf="parent"
+        android:gravity="center_vertical"
+        android:paddingRight="12dp"
+        android:layout_height="match_parent">
+        <TextView
+            android:id="@+id/toolbar_right_tvdr"
+            android:layout_width="60dp"
+            android:layout_height="30dp"
+            android:gravity="center"
+            android:minWidth="80dp"
+            tools:text="文字" />
+    </LinearLayout>
 </android.support.constraint.ConstraintLayout>

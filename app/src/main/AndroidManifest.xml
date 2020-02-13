@@ -29,9 +29,25 @@
              />
         <activity android:name=".calendar.mutl.MultiActivity" />
         <activity android:name=".calendar.single.SingleActivity" />
+        <activity android:name=".calendar.atview.ATviewAct" />
+        <activity android:name=".calendar.car.LinearNormalActivity" />
+        <activity android:name=".calendar.popupwindow.PopupWindowAct" />
+        <activity android:name=".dy.MyLogAct" />
+        <activity android:name=".MyFlutterActivity" />
+        <activity android:name=".flutter.MainFlutterActivity" />
+        <activity android:name=".dy.FlutterActDemo" />
         <!--<activity android:name="com.haibin.calendarviewproject.MainActivity" />-->
         <!--<activity android:name="com.haibin.calendarviewproject.CalendarActivity" />-->
         <!--<activity android:name="com.haibin.calendarviewproject.colorful.ColorfulActivity" />-->
+        <activity
+            android:name="io.flutter.embedding.android.FlutterActivity"
+            android:theme="@style/AppTheme_1"
+            android:configChanges="orientation|keyboardHidden|keyboard|screenSize|locale|layoutDirection|fontScale|screenLayout|density"
+            android:hardwareAccelerated="true"
+            android:windowSoftInputMode="adjustResize"
+            android:exported="true"
+            />
+
     </application>
 
 </manifest>

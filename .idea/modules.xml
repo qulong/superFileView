@@ -3,6 +3,7 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/my_flutter/.android/Flutter/flutter.iml" filepath="$PROJECT_DIR$/my_flutter/.android/Flutter/flutter.iml" />
       <module fileurl="file://$PROJECT_DIR$/lib_calendar/lib_calendar.iml" filepath="$PROJECT_DIR$/lib_calendar/lib_calendar.iml" />
       <module fileurl="file://$PROJECT_DIR$/superFileView.iml" filepath="$PROJECT_DIR$/superFileView.iml" />
     </modules>

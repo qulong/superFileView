@@ -8,6 +8,8 @@ import android.app.Application;
 import android.os.Build;
 import com.tencent.smtt.sdk.QbSdk;
 
+import io.flutter.view.FlutterMain;
+
 /**
  * Created by ljh
  * on 2016/12/22.
@@ -21,6 +23,7 @@ public class App extends Application {
         //增加这句话
         QbSdk.initX5Environment(this,null);
         ExceptionHandler.getInstance().initConfig(this);
+        FlutterMain.startInitialization(this);
     }
 
 

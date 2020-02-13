@@ -33,14 +33,45 @@
         <activity android:name="com.silang.superfileview.FileDisplayActivity" />
         <activity android:name="com.silang.superfileview.calendar.mutl.MultiActivity" />
         <activity android:name="com.silang.superfileview.calendar.single.SingleActivity" />
+        <activity android:name="com.silang.superfileview.calendar.atview.ATviewAct" />
+        <activity android:name="com.silang.superfileview.calendar.car.LinearNormalActivity" />
+        <activity android:name="com.silang.superfileview.calendar.popupwindow.PopupWindowAct" />
+        <activity android:name="com.silang.superfileview.dy.MyLogAct" />
+        <activity android:name="com.silang.superfileview.MyFlutterActivity" />
+        <activity android:name="com.silang.superfileview.flutter.MainFlutterActivity" />
+        <activity android:name="com.silang.superfileview.dy.FlutterActDemo" />
         <!-- <activity android:name="com.haibin.calendarviewproject.MainActivity" /> -->
         <!-- <activity android:name="com.haibin.calendarviewproject.CalendarActivity" /> -->
         <!-- <activity android:name="com.haibin.calendarviewproject.colorful.ColorfulActivity" /> -->
+        <activity
+            android:name="io.flutter.embedding.android.FlutterActivity"
+            android:configChanges="orientation|keyboardHidden|keyboard|screenSize|locale|layoutDirection|fontScale|screenLayout|density"
+            android:exported="true"
+            android:hardwareAccelerated="true"
+            android:theme="@style/AppTheme_1"
+            android:windowSoftInputMode="adjustResize" />
         <activity
             android:name="pub.devrel.easypermissions.AppSettingsDialogHolderActivity"
             android:exported="false"
             android:label=""
             android:theme="@style/EasyPermissions.Transparent" />
+
+        <provider
+            android:name="razerdp.basepopup.BasePopupRuntimeTrojanProvider"
+            android:authorities="com.silang.superfileview.basepopup-trojan"
+            android:exported="false"
+            android:multiprocess="false" />
+
+        <meta-data
+            android:name="flutterProjectType"
+            android:value="module" />
+        <!--
+           Don't delete the meta-data below.
+           It is used by the Flutter tool to generate GeneratedPluginRegistrant.java
+        -->
+        <meta-data
+            android:name="flutterEmbedding"
+            android:value="2" />
     </application>
 
 </manifest>

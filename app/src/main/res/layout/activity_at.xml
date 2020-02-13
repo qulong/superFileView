@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <EditText
+        android:id="@+id/at_edit"
+        android:layout_width="match_parent"
+        android:layout_height="120dp" />
+
+    <Button
+        android:id="@+id/at_btn"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:text="点击添加AT" />
+
+    <com.silang.superfileview.calendar.atview.MsgEditText
+        android:id="@+id/at_msgend"
+        android:layout_width="match_parent"
+        android:layout_height="120dp" />
+    <com.silang.superfileview.calendar.atview.MentionEditText
+        android:id="@+id/at_mevsgend"
+        android:layout_width="match_parent"
+        android:layout_height="120dp" />
+</LinearLayout>

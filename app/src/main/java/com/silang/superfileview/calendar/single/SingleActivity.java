@@ -15,6 +15,7 @@ import com.dy.lib_calendar.Calendar;
 import com.dy.lib_calendar.CalendarLayout;
 import com.dy.lib_calendar.CalendarView;
 import com.silang.superfileview.R;
+import com.silang.superfileview.calendar.car.LinearNormalActivity;
 import com.silang.superfileview.calendar.mutl.Article;
 import com.silang.superfileview.calendar.mutl.ArticleAdapter;
 import com.silang.superfileview.calendar.mutl.GroupItemDecoration;
@@ -91,6 +92,7 @@ public class SingleActivity extends BaseActivity implements
                         "  --  " + mCalendarView.getSelectedCalendar().getScheme() +
                                 "  --  " + mCalendarView.getSelectedCalendar().toString() +
                                 "  --  " + mCalendarView.getSelectedCalendar().hasScheme());
+                LinearNormalActivity.show(SingleActivity.this);
             }
         });
         mCalendarLayout = findViewById(R.id.calendarLayout);
