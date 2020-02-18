@@ -9,11 +9,16 @@ import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
+import android.text.TextUtils;
 
+import com.google.gson.Gson;
 import com.silang.superfileview.R;
+import com.silang.superfileview.TLog;
 import com.silang.superfileview.calendar.mutl.base.activity.BaseActivity;
+import com.silang.superfileview.dy.bean.FlutterParam;
 
 import java.util.ArrayList;
+import java.util.Map;
 
 /**
  * @author: qulonglong
@@ -33,6 +38,13 @@ public class MyLogAct extends BaseActivity {
         context.startActivity(new Intent(context, MyLogAct.class));
     }
 
+    public static void showFlutter(Context context, String json) {
+        Intent intent = new Intent(context, MyLogAct.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        intent.putExtra("FlutterParam", json);
+        context.startActivity(intent);
+    }
+
     @Override
     protected int getLayoutId() {
         return R.layout.my_log_details;
@@ -44,8 +56,12 @@ public class MyLogAct extends BaseActivity {
         collapsingToolbarLayout = findViewById(R.id.collapsingToolbar);
         tableLayout = findViewById(R.id.log_tab_layout);
         viewPager = findViewById(R.id.log_view_pager);
-
-
+        String flutterJson = getIntent().getStringExtra("FlutterParam");
+        if (!TextUtils.isEmpty(flutterJson)) {
+            Gson gson = new Gson();
+            FlutterParam flutterV = gson.fromJson(flutterJson, FlutterParam.class);
+            TLog.e("flutter", flutterV.value);
+        }
 //        CoordinatorLayout.LayoutParams params = (CoordinatorLayout.LayoutParams) appBarLayout.getLayoutParams();
 //        AppBarLayout.Behavior behavior = (AppBarLayout.Behavior) params.getBehavior();
 //        behavior.setDragCallback(new AppBarLayout.Behavior.BaseDragCallback() {

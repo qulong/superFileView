@@ -1,9 +1,9 @@
 -- Merging decision tree log ---
 manifest
-ADDED from D:\projectandroid\superFileView\app\src\main\AndroidManifest.xml:2:1-53:12
-INJECTED from D:\projectandroid\superFileView\app\src\main\AndroidManifest.xml:2:1-53:12
-INJECTED from D:\projectandroid\superFileView\app\src\main\AndroidManifest.xml:2:1-53:12
-INJECTED from D:\projectandroid\superFileView\app\src\main\AndroidManifest.xml:2:1-53:12
+ADDED from D:\projectandroid\superFileView\app\src\main\AndroidManifest.xml:2:1-74:12
+INJECTED from D:\projectandroid\superFileView\app\src\main\AndroidManifest.xml:2:1-74:12
+INJECTED from D:\projectandroid\superFileView\app\src\main\AndroidManifest.xml:2:1-74:12
+INJECTED from D:\projectandroid\superFileView\app\src\main\AndroidManifest.xml:2:1-74:12
 MERGED from [:lib_calendar] D:\projectandroid\superFileView\lib_calendar\build\intermediates\manifests\full\debug\AndroidManifest.xml:2:1-11:12
 MERGED from [pub.devrel:easypermissions:0.4.3] C:\Users\admin\.gradle\caches\transforms-1\files-1.1\easypermissions-0.4.3.aar\bd6de7f7206b5d90d5ec5a3b2518f432\AndroidManifest.xml:2:1-19:12
 MERGED from [com.android.support:design:28.0.0] C:\Users\admin\.gradle\caches\transforms-1\files-1.1\design-28.0.0.aar\5f67eaaca8e19dab07aae306b99b98dc\AndroidManifest.xml:17:1-24:12
@@ -42,22 +42,22 @@ MERGED from [com.android.support:interpolator:28.0.0] C:\Users\admin\.gradle\cac
 MERGED from [android.arch.lifecycle:livedata:1.1.1] C:\Users\admin\.gradle\caches\transforms-1\files-1.1\livedata-1.1.1.aar\5f127e9df2dadac22a604ec5bce42738\AndroidManifest.xml:17:1-22:12
 MERGED from [android.arch.lifecycle:livedata-core:1.1.1] C:\Users\admin\.gradle\caches\transforms-1\files-1.1\livedata-core-1.1.1.aar\d45e757050927d95cf9fd7ed803fdede\AndroidManifest.xml:17:1-22:12
 MERGED from [android.arch.core:runtime:1.1.1] C:\Users\admin\.gradle\caches\transforms-1\files-1.1\runtime-1.1.1.aar\aea7f2106e4153826b43acd15e58c069\AndroidManifest.xml:17:1-22:12
-INJECTED from D:\projectandroid\superFileView\app\src\main\AndroidManifest.xml:2:1-53:12
-INJECTED from D:\projectandroid\superFileView\app\src\main\AndroidManifest.xml:2:1-53:12
-INJECTED from D:\projectandroid\superFileView\app\src\main\AndroidManifest.xml:2:1-53:12
+INJECTED from D:\projectandroid\superFileView\app\src\main\AndroidManifest.xml:2:1-74:12
+INJECTED from D:\projectandroid\superFileView\app\src\main\AndroidManifest.xml:2:1-74:12
+INJECTED from D:\projectandroid\superFileView\app\src\main\AndroidManifest.xml:2:1-74:12
 	package
 		ADDED from D:\projectandroid\superFileView\app\src\main\AndroidManifest.xml:4:5-39
 		INJECTED from D:\projectandroid\superFileView\app\src\main\AndroidManifest.xml
 		INJECTED from D:\projectandroid\superFileView\app\src\main\AndroidManifest.xml
 	android:versionName
 		INJECTED from D:\projectandroid\superFileView\app\src\main\AndroidManifest.xml
-		ADDED from D:\projectandroid\superFileView\app\src\main\AndroidManifest.xml:2:1-53:12
+		ADDED from D:\projectandroid\superFileView\app\src\main\AndroidManifest.xml:2:1-74:12
 		INJECTED from D:\projectandroid\superFileView\app\src\main\AndroidManifest.xml
 	xmlns:tools
 		ADDED from D:\projectandroid\superFileView\app\src\main\AndroidManifest.xml:3:5-51
 	android:versionCode
 		INJECTED from D:\projectandroid\superFileView\app\src\main\AndroidManifest.xml
-		ADDED from D:\projectandroid\superFileView\app\src\main\AndroidManifest.xml:2:1-53:12
+		ADDED from D:\projectandroid\superFileView\app\src\main\AndroidManifest.xml:2:1-74:12
 		INJECTED from D:\projectandroid\superFileView\app\src\main\AndroidManifest.xml
 	xmlns:android
 		ADDED from D:\projectandroid\superFileView\app\src\main\AndroidManifest.xml:2:11-69
@@ -76,7 +76,7 @@ ADDED from D:\projectandroid\superFileView\app\src\main\AndroidManifest.xml:9:5-
 	android:name
 		ADDED from D:\projectandroid\superFileView\app\src\main\AndroidManifest.xml:9:22-77
 application
-ADDED from D:\projectandroid\superFileView\app\src\main\AndroidManifest.xml:11:5-51:19
+ADDED from D:\projectandroid\superFileView\app\src\main\AndroidManifest.xml:11:5-72:19
 MERGED from [pub.devrel:easypermissions:0.4.3] C:\Users\admin\.gradle\caches\transforms-1\files-1.1\easypermissions-0.4.3.aar\bd6de7f7206b5d90d5ec5a3b2518f432\AndroidManifest.xml:11:5-17:19
 MERGED from [pub.devrel:easypermissions:0.4.3] C:\Users\admin\.gradle\caches\transforms-1\files-1.1\easypermissions-0.4.3.aar\bd6de7f7206b5d90d5ec5a3b2518f432\AndroidManifest.xml:11:5-17:19
 MERGED from [com.android.support:design:28.0.0] C:\Users\admin\.gradle\caches\transforms-1\files-1.1\design-28.0.0.aar\5f67eaaca8e19dab07aae306b99b98dc\AndroidManifest.xml:22:5-20
@@ -153,10 +153,6 @@ activity#com.silang.superfileview.MyFlutterActivity
 ADDED from D:\projectandroid\superFileView\app\src\main\AndroidManifest.xml:36:9-55
 	android:name
 		ADDED from D:\projectandroid\superFileView\app\src\main\AndroidManifest.xml:36:19-52
-activity#com.silang.superfileview.flutter.MainFlutterActivity
-ADDED from D:\projectandroid\superFileView\app\src\main\AndroidManifest.xml:37:9-65
-	android:name
-		ADDED from D:\projectandroid\superFileView\app\src\main\AndroidManifest.xml:37:19-62
 activity#com.silang.superfileview.dy.FlutterActDemo
 ADDED from D:\projectandroid\superFileView\app\src\main\AndroidManifest.xml:38:9-55
 	android:name
@@ -175,6 +171,50 @@ ADDED from D:\projectandroid\superFileView\app\src\main\AndroidManifest.xml:42:9
 		ADDED from D:\projectandroid\superFileView\app\src\main\AndroidManifest.xml:44:13-46
 	android:name
 		ADDED from D:\projectandroid\superFileView\app\src\main\AndroidManifest.xml:43:13-72
+activity#io.flutter.app.FlutterActivity
+ADDED from D:\projectandroid\superFileView\app\src\main\AndroidManifest.xml:50:9-57:15
+	android:hardwareAccelerated
+		ADDED from D:\projectandroid\superFileView\app\src\main\AndroidManifest.xml:54:13-47
+	android:windowSoftInputMode
+		ADDED from D:\projectandroid\superFileView\app\src\main\AndroidManifest.xml:55:13-55
+	android:exported
+		ADDED from D:\projectandroid\superFileView\app\src\main\AndroidManifest.xml:56:13-36
+	android:configChanges
+		ADDED from D:\projectandroid\superFileView\app\src\main\AndroidManifest.xml:53:13-137
+	android:theme
+		ADDED from D:\projectandroid\superFileView\app\src\main\AndroidManifest.xml:52:13-46
+	android:name
+		ADDED from D:\projectandroid\superFileView\app\src\main\AndroidManifest.xml:51:13-58
+activity#com.silang.superfileview.flutter.MainFlutterActivity2
+ADDED from D:\projectandroid\superFileView\app\src\main\AndroidManifest.xml:58:9-70:20
+	android:launchMode
+		ADDED from D:\projectandroid\superFileView\app\src\main\AndroidManifest.xml:60:13-43
+	android:hardwareAccelerated
+		ADDED from D:\projectandroid\superFileView\app\src\main\AndroidManifest.xml:62:13-47
+	android:windowSoftInputMode
+		ADDED from D:\projectandroid\superFileView\app\src\main\AndroidManifest.xml:63:13-55
+	android:configChanges
+		ADDED from D:\projectandroid\superFileView\app\src\main\AndroidManifest.xml:61:13-106
+	android:name
+		ADDED from D:\projectandroid\superFileView\app\src\main\AndroidManifest.xml:59:13-57
+intent-filter#action:name:android.intent.action.SEND+category:name:android.intent.category.DEFAULT+data:mimeType:text/plain
+ADDED from D:\projectandroid\superFileView\app\src\main\AndroidManifest.xml:65:13-69:29
+action#android.intent.action.SEND
+ADDED from D:\projectandroid\superFileView\app\src\main\AndroidManifest.xml:66:17-69
+	android:name
+		ADDED from D:\projectandroid\superFileView\app\src\main\AndroidManifest.xml:66:25-66
+category#android.intent.category.DEFAULT
+ADDED from D:\projectandroid\superFileView\app\src\main\AndroidManifest.xml:67:17-76
+	android:name
+		ADDED from D:\projectandroid\superFileView\app\src\main\AndroidManifest.xml:67:27-73
+data
+ADDED from D:\projectandroid\superFileView\app\src\main\AndroidManifest.xml:68:17-55
+	android:mimeType
+		ADDED from D:\projectandroid\superFileView\app\src\main\AndroidManifest.xml:68:23-52
+activity#com.silang.superfileview.flutter.MainEmbeddingActivity
+ADDED from D:\projectandroid\superFileView\app\src\main\AndroidManifest.xml:71:9-67
+	android:name
+		ADDED from D:\projectandroid\superFileView\app\src\main\AndroidManifest.xml:71:19-64
 uses-sdk
 INJECTED from D:\projectandroid\superFileView\app\src\main\AndroidManifest.xml reason: use-sdk injection requested
 INJECTED from D:\projectandroid\superFileView\app\src\main\AndroidManifest.xml

@@ -2,6 +2,7 @@ package com.silang.superfileview;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.content.res.AssetFileDescriptor;
 import android.net.Uri;
 import android.support.v7.app.AppCompatActivity;
@@ -16,21 +17,25 @@ import android.widget.ArrayAdapter;
 import android.widget.ListPopupWindow;
 import android.widget.TextView;
 
+import com.google.gson.Gson;
 import com.silang.superfileview.R;
 import com.silang.superfileview.calendar.atview.ATviewAct;
 import com.silang.superfileview.calendar.mutl.MultiActivity;
 import com.silang.superfileview.calendar.popupwindow.PopupWindowAct;
 import com.silang.superfileview.calendar.single.SingleActivity;
 import com.silang.superfileview.dy.MyLogAct;
-import com.silang.superfileview.flutter.MainFlutterActivity;
+import com.silang.superfileview.dy.bean.FlutterParam;
+import com.silang.superfileview.flutter.MainEmbeddingActivity;
+import com.silang.superfileview.flutter.MainFlutterActivity2;
+import com.silang.superfileview.flutter.plugin.MyPlugin;
 
-import java.io.FileReader;
-import java.io.IOException;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
-import io.flutter.embedding.android.FlutterFragment;
-import io.flutter.embedding.android.FlutterView;
+import io.flutter.embedding.android.FlutterActivity;
+import io.flutter.view.FlutterMain;
+import io.flutter.view.FlutterView;
 import pub.devrel.easypermissions.EasyPermissions;
 
 public class MainActivity extends AppCompatActivity {
@@ -107,8 +112,15 @@ public class MainActivity extends AppCompatActivity {
                         }  else if ("popup演示".equals(datas.get(position))) {
                             PopupWindowAct.show(MainActivity.this);
                         }   else if ("mylog".equals(datas.get(position))) {
-//                            MyLogAct.show(MainActivity.this);
-                            MainFlutterActivity.show(MainActivity.this);
+                            MyLogAct.show(MainActivity.this);
+                        }  else if ("flutter".equals(datas.get(position))) {
+                            MainFlutterActivity2.show(MainActivity.this);
+//                            startFlutterDef();
+//                            startFlutter("seconds");
+                        } else if ("flutter_teshu".equals(datas.get(position))) {
+                            startFlutter("seconds");
+                        }else if ("flutter_android_tonxu".equals(datas.get(position))) {
+                            MainEmbeddingActivity.show(MainActivity.this);
                         } else {
                             String[] perms = new String[]{Manifest.permission.READ_EXTERNAL_STORAGE,
                                     Manifest.permission.WRITE_EXTERNAL_STORAGE};
@@ -134,7 +146,22 @@ public class MainActivity extends AppCompatActivity {
 
     private void initPaths() {
     }
+    private void startFlutter(String channel) {
+        FlutterParam param=new FlutterParam();
+        param.name="android to native";
+        param.value="安卓过来的参数";
+        Gson gson=new Gson();
+        String jsonPP= gson.toJson(param);
+        Intent customFlutter = FlutterActivity.withNewEngine()
+                .initialRoute("@"+channel+"@"+jsonPP)
+                .build(this);
+        startActivity(customFlutter);
+    }
 
+    private void startFlutterDef() {
+        Intent customFlutter = FlutterActivity.createDefaultIntent(this);
+        startActivity(customFlutter);
+    }
     private void initDatas() {
         datas.add("网络获取并打开doc文件");
         datas.add("打开本地doc文件");
@@ -154,6 +181,9 @@ public class MainActivity extends AppCompatActivity {
         datas.add("atatat演示");
         datas.add("popup演示");
         datas.add("mylog");
+        datas.add("flutter");
+        datas.add("flutter_teshu");
+        datas.add("flutter_android_tonxu");
     }
 
     private List<String> getDatas() {

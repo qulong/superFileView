@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+<Button
+    android:id="@+id/btn_1"
+    android:layout_width="match_parent"
+    android:text="本地按钮 跳转flutter"
+    android:gravity="center"
+    app:layout_constraintLeft_toLeftOf="parent"
+    app:layout_constraintTop_toTopOf="parent"
+    android:layout_height="@dimen/dp45" />
+<TextView
+    android:id="@+id/value_1"
+    android:layout_width="match_parent"
+    android:text="flutter 回传数据："
+    android:gravity="center"
+    app:layout_constraintLeft_toLeftOf="parent"
+    app:layout_constraintTop_toBottomOf="@id/btn_1"
+    android:layout_height="@dimen/dp45" />
+</android.support.constraint.ConstraintLayout>

@@ -1,45 +1,82 @@
 import 'dart:ui';
-
+import 'dart:convert';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import './Seconds.dart';
-void main() => runApp(_widgetForRoute(window.defaultRouteName));
+import './RouteFlutter.dart';
+import './f_f_entity.dart';
+import './MethodCallWidget.dart';
 
+void main() => runApp(MyApp());
+
+//void main(){
+//  SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp])
+//      .then((_){
+//    runApp(new MyApp());
+//  });
+//}
 Widget _widgetForRoute(String route) {
-  switch (route) {
+  String def="";
+  String params=null;
+  if(route.startsWith("@")){
+    List<String> sp=route.split("@");
+    def= sp[1];
+    print(sp[2]);
+    params=sp[2];
+//    params= FFEntity.fromJson(new Map<String, dynamic>.from(json.decode(sp[2])));
+  }else{
+    def=route;
+  }
+  switch (def) {
     case "seconds":
-      return Seconds();
+      return Seconds(params);
+    case "methodcallBack":
+      return MethodCallWidget();
+    case "th":
+      return RouteFlutter();
 
     default:
-      return MyApp();
+      return MyHomePage(title: "canshu");
   }
 }
-
-
-
-
-
 
 class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
+    print("#######################################");
+    print(window);
+    print(window.defaultRouteName);
     return MaterialApp(
-      title: 'Flutter Demo',
-      theme: ThemeData(
-        // This is the theme of your application.
-        //
-        // Try running your application with "flutter run". You'll see the
-        // application has a blue toolbar. Then, without quitting the app, try
-        // changing the primarySwatch below to Colors.green and then invoke
-        // "hot reload" (press "r" in the console where you ran "flutter run",
-        // or press Run > Flutter Hot Reload in a Flutter IDE). Notice that the
-        // counter didn't reset back to zero; the application is not restarted.
-        primarySwatch: Colors.blue,
-      ),
-      home: MyHomePage(title: 'Flutter Demo Home Page'),
+      home: _widgetForRoute(window.defaultRouteName),
     );
   }
 }
+//
+//
+//
+//class MyApp extends StatelessWidget {
+//  // This widget is the root of your application.
+//  @override
+//  Widget build(BuildContext context) {
+//    return MaterialApp(
+//      title: 'Flutter Demo',
+//      theme: ThemeData(
+//        // This is the theme of your application.
+//        //
+//        // Try running your application with "flutter run". You'll see the
+//        // application has a blue toolbar. Then, without quitting the app, try
+//        // changing the primarySwatch below to Colors.green and then invoke
+//        // "hot reload" (press "r" in the console where you ran "flutter run",
+//        // or press Run > Flutter Hot Reload in a Flutter IDE). Notice that the
+//        // counter didn't reset back to zero; the application is not restarted.
+//        primarySwatch: Colors.blue,
+//
+//      ),
+//      home: MyHomePage(title: 'Flutter Demo Home Page'),
+//    );
+//  }
+//}
 
 class MyHomePage extends StatefulWidget {
   MyHomePage({Key key, this.title}) : super(key: key);
@@ -86,7 +123,10 @@ class _MyHomePageState extends State<MyHomePage> {
         // Here we take the value from the MyHomePage object that was created by
         // the App.build method, and use it to set our appbar title.
         title: Text(widget.title),
+        centerTitle: true,
+        leading: BackButton(),
       ),
+      backgroundColor: Colors.deepPurpleAccent,
       body: Center(
         // Center is a layout widget. It takes a single child and positions it
         // in the middle of the parent.
@@ -109,10 +149,18 @@ class _MyHomePageState extends State<MyHomePage> {
           children: <Widget>[
             Text(
               'You have pushed the button this many times:',
+              style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 20.0,
+                  backgroundColor: Colors.deepPurpleAccent),
             ),
             Text(
               '$_counter',
               style: Theme.of(context).textTheme.display1,
+            ),
+            RaisedButton(
+              onPressed: () => jumpNative("Tag1", jsonparam: ""),
+              child: Text("跳转到原生指定页面"),
             ),
           ],
         ),
@@ -124,4 +172,41 @@ class _MyHomePageState extends State<MyHomePage> {
       ), // This trailing comma makes auto-formatting nicer for build methods.
     );
   }
+
+  void jumpNative(String tag, {String jsonparam}) async{
+
+//     Map<String,String> paramsMap = {"param1": "value1", "param2": "value2", "param3": "value3"};
+//      String json = jsonEncode(paramsMap);
+  var flutter=FFEntity(name: "测试",value: "哈哈哈哈");
+    MyFlutterPlugin.openNativePage(tag, paramsJson: jsonEncode(flutter));
+  }
+}
+
+
+class MyFlutterPlugin {
+  static const MethodChannel _channel =
+      const MethodChannel('com.your.packagename/flutter_plugin');
+
+  /**
+   * 打开原生页面
+   */
+  static Future<String> openNativePage(String target, {String paramsJson}) async {
+//    if (paramsMap == null) {
+//      paramsMap = Map();
+//    }
+    return await _channel
+        .invokeMethod("openNative", {"target": target, "params": paramsJson});
+  }
+}
+//
+//作者：孑孓
+//链接：https://juejin.im/post/5c7a26faf265da2da8358eb1
+//来源：掘金
+//著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+
+
+class ParamsFlutter{
+  final String name;
+  final String value;
+  ParamsFlutter(this.name,this.value);
 }

@@ -38,7 +38,7 @@
         <activity android:name="com.silang.superfileview.calendar.popupwindow.PopupWindowAct" />
         <activity android:name="com.silang.superfileview.dy.MyLogAct" />
         <activity android:name="com.silang.superfileview.MyFlutterActivity" />
-        <activity android:name="com.silang.superfileview.flutter.MainFlutterActivity" />
+        <!-- <activity android:name=".flutter.MainFlutterActivity" /> -->
         <activity android:name="com.silang.superfileview.dy.FlutterActDemo" />
         <!-- <activity android:name="com.haibin.calendarviewproject.MainActivity" /> -->
         <!-- <activity android:name="com.haibin.calendarviewproject.CalendarActivity" /> -->
@@ -50,6 +50,30 @@
             android:hardwareAccelerated="true"
             android:theme="@style/AppTheme_1"
             android:windowSoftInputMode="adjustResize" />
+        <activity
+            android:name="io.flutter.app.FlutterActivity"
+            android:configChanges="orientation|keyboardHidden|keyboard|screenSize|locale|layoutDirection|fontScale|screenLayout|density"
+            android:exported="true"
+            android:hardwareAccelerated="true"
+            android:theme="@style/AppTheme_1"
+            android:windowSoftInputMode="adjustResize" />
+        <activity
+            android:name="com.silang.superfileview.flutter.MainFlutterActivity2"
+            android:configChanges="orientation|keyboardHidden|keyboard|screenSize|locale|layoutDirection"
+            android:hardwareAccelerated="true"
+            android:launchMode="singleTop"
+            android:windowSoftInputMode="adjustResize" >
+
+            <!-- ... -->
+            <intent-filter>
+                <action android:name="android.intent.action.SEND" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+
+                <data android:mimeType="text/plain" />
+            </intent-filter>
+        </activity>
+        <activity android:name="com.silang.superfileview.flutter.MainEmbeddingActivity" />
         <activity
             android:name="pub.devrel.easypermissions.AppSettingsDialogHolderActivity"
             android:exported="false"
