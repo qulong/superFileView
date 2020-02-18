@@ -6,6 +6,7 @@ import './Seconds.dart';
 import './RouteFlutter.dart';
 import './f_f_entity.dart';
 import './MethodCallWidget.dart';
+import './MethodCallWidget2.dart';
 
 void main() => runApp(MyApp());
 
@@ -32,6 +33,8 @@ Widget _widgetForRoute(String route) {
       return Seconds(params);
     case "methodcallBack":
       return MethodCallWidget();
+    case "chan2":
+      return MethodCallWidget2();
     case "th":
       return RouteFlutter();
 

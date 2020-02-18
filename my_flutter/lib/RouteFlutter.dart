@@ -3,35 +3,44 @@ import 'package:flutter/material.dart';
 //void main() => runApp(MyApp());
 
 class RouteFlutter extends StatelessWidget {
+  // 定义路由信息
+  final Map<String, Function> routes = {
+    ExtractArgumentsScreen.routeName: (context, {arguments}) =>
+        ExtractArgumentsScreen(arguments),
+    PassArgumentsScreen.routeName: (context, {title, msg}) =>
+        PassArgumentsScreen(title: title, message: msg)
+  };
+
+  Future<Route> jumpRoute(RouteSettings settings) async {
+    // 统一处理
+    final String name = settings.name;
+    final Function pageContentBuilder = this.routes[name];
+    if (pageContentBuilder != null) {
+      final Route route = MaterialPageRoute(
+          builder: (context) =>
+              pageContentBuilder(context, arguments: settings.arguments));
+      return route;
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      // Provide a function to handle named routes. Use this function to
-      // identify the named route being pushed, and create the correct
-      // Screen.
-        onGenerateRoute: (settings) {
-          // If you push the PassArguments route
-          if (settings.name == PassArgumentsScreen.routeName) {
-            // Cast the arguments to the correct type: ScreenArguments.
-            final ScreenArguments args = settings.arguments;
-
-            // Then, extract the required data from the arguments and
-            // pass the data to the correct screen.
-            return MaterialPageRoute(
-              builder: (context) {
-                return PassArgumentsScreen(
-                  title: args.title,
-                  message: args.message,
-                );
-              },
-            );
-          }
+//         Provide a function to handle named routes. Use this function to
+//         identify the named route being pushed, and create the correct
+//         Screen.
+        onGenerateRoute: (RouteSettings settings) {
+          jumpRoute(settings);
         },
         title: 'Navigation with Arguments',
         home: HomeScreen(),
         routes: {
           ExtractArgumentsScreen.routeName: (context) =>
-              ExtractArgumentsScreen(),
+              ExtractArgumentsScreen(ScreenArguments("hahah", "ceshi")),
+          PassArgumentsScreen.routeName: (context) => PassArgumentsScreen(
+                title: "说哈",
+                message: "你好",
+              ),
         });
   }
 }
@@ -92,6 +101,9 @@ class HomeScreen extends StatelessWidget {
 // A Widget that extracts the necessary arguments from the ModalRoute.
 class ExtractArgumentsScreen extends StatelessWidget {
   static const routeName = '/extractArguments';
+  ScreenArguments screenArguments;
+
+  ExtractArgumentsScreen(this.screenArguments);
 
   @override
   Widget build(BuildContext context) {
@@ -101,7 +113,7 @@ class ExtractArgumentsScreen extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text(args.title),
+        title: Text(args.title + screenArguments.message),
       ),
       body: Center(
         child: Text(args.message),
@@ -130,9 +142,10 @@ class PassArgumentsScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final ScreenArguments args = ModalRoute.of(context).settings.arguments;
     return Scaffold(
       appBar: AppBar(
-        title: Text(title),
+        title: Text(title + args.title),
       ),
       body: Center(
         child: Text(message),

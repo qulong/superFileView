@@ -19,4 +19,13 @@
     app:layout_constraintLeft_toLeftOf="parent"
     app:layout_constraintTop_toBottomOf="@id/btn_1"
     android:layout_height="@dimen/dp45" />
+
+    <Button
+        android:id="@+id/btn_2"
+        android:layout_width="match_parent"
+        android:text="跳转flutter 不通讯"
+        android:gravity="center"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/value_1"
+        android:layout_height="@dimen/dp45" />
 </android.support.constraint.ConstraintLayout>

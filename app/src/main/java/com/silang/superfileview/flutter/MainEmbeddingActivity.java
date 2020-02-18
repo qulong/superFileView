@@ -31,9 +31,15 @@ import io.flutter.plugins.GeneratedPluginRegistrant;
 public class MainEmbeddingActivity extends FlutterActivity {
     TextView valueTv;
     MethodChannel methodChannel;
+    MethodChannel methodChanne2;
+
+    private final String channel_engine_id_1 = "my_engine_id";
+    private final String channel_engine_id_2 = "th_eng_id";
+
     public static void show(Context context) {
         context.startActivity(new Intent(context, MainEmbeddingActivity.class));
     }
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -45,37 +51,66 @@ public class MainEmbeddingActivity extends FlutterActivity {
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startFlutter("methodcallBack");
+                startFlutter(channel_engine_id_1);
             }
         });
-//
-//
-//        GeneratedPluginRegistrant.registerWith(getFlutterEngine());
-//        methodChannel = new MethodChannel(getFlutterEngine().getDartExecutor(), "gogogo");
-//        methodChannel.setMethodCallHandler(new MethodChannel.MethodCallHandler() {
-//            @Override
-//            public void onMethodCall(@NonNull MethodCall methodCall, @NonNull MethodChannel.Result result) {
-//                // 解析参数，做页面跳转
-////                if ("openNative".equals(call.method)){
-////                    TLog.e("MainEmbeddingActivity",call.arguments.toString());
-////                }
-//                switch (methodCall.method) {
-//                    case "send"://返回的方法名
-//                        //给flutter端的返回值
-//                        result.success("MethodChannelPlugin收到：这个是Android 给flutter的响应传递过去的值");
-//                        TLog.e("MainEmbeddingActivity", methodCall.arguments.toString());
-////                        if (activity instanceof FlutterAppActivity) {
-////                            ((FlutterAppActivity) activity).showContent(methodCall.arguments);
-////                        }
-//                        break;
-//                    default:
-//                        result.notImplemented();
-//                        break;
-//                }
-//            }
-//        });
+        valueTv.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                initMethodChannel2();
+                startFlutter(channel_engine_id_2);
+            }
+        });
+        Button button1=findViewById(R.id.btn_2);
+        button1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startFlutterAct("th");
+            }
+        });
     }
-//
+
+    void initMethodChannel2() {
+        if (methodChanne2 != null) {
+            return;
+        }
+        FlutterEngine flutterEngine = new FlutterEngine(MainEmbeddingActivity.this);
+        flutterEngine.getNavigationChannel().setInitialRoute("chan2");
+        flutterEngine.getDartExecutor().executeDartEntrypoint(DartExecutor.DartEntrypoint.createDefault());
+        FlutterEngineCache.getInstance().put(channel_engine_id_2, flutterEngine);
+        methodChannel = new MethodChannel(flutterEngine.getDartExecutor(), "channel2");
+        methodChannel.setMethodCallHandler(new MethodChannel.MethodCallHandler() {
+            @Override
+            public void onMethodCall(@NonNull MethodCall methodCall, @NonNull MethodChannel.Result result) {
+                // 解析参数，做页面跳转
+//                if ("openNative".equals(call.method)){
+//                    TLog.e("MainEmbeddingActivity",call.arguments.toString());
+//                }
+                switch (methodCall.method) {
+                    case "send2"://返回的方法名
+                        //给flutter端的返回值
+                        result.success("MethodChannelPlugin收到：这个是Android 给flutter的响应传递过去的值");
+                        TLog.e("MainEmbeddingActivity", methodCall.arguments.toString());
+                        valueTv.setText(methodCall.arguments.toString());
+//                        if (activity instanceof FlutterAppActivity) {
+//                            ((FlutterAppActivity) activity).showContent(methodCall.arguments);
+//                        }
+                        break;
+                        case "loadData"://返回的方法名
+                        //给flutter端的返回值
+                        result.success("loadData flutter的响应传递过去的值loadData");
+                        TLog.e("MainEmbeddingActivity", methodCall.arguments.toString());
+                        valueTv.setText(methodCall.arguments.toString());
+                        break;
+                    default:
+                        result.notImplemented();
+                        break;
+                }
+            }
+        });
+    }
+
+    //
     @Override
     public void configureFlutterEngine(@NonNull FlutterEngine flutterEngine) {
 
@@ -89,14 +124,13 @@ public class MainEmbeddingActivity extends FlutterActivity {
 //        // Cache the FlutterEngine to be used by FlutterActivity.
         FlutterEngineCache
                 .getInstance()
-                .put("my_engine_id", flutterEngine);
+                .put(channel_engine_id_1, flutterEngine);
 
         super.configureFlutterEngine(flutterEngine);
-        TLog.e("MainEmbeddingActivity","configureFlutterEngine configureFlutterEngine configureFlutterEngine");
+        TLog.e("MainEmbeddingActivity", "configureFlutterEngine configureFlutterEngine configureFlutterEngine");
 
 //        MyPlugin.registerWith(flutterEngine.getDartExecutor());
-        MethodChannel methodChannel = new MethodChannel(flutterEngine.getDartExecutor(), "gogogo");
-//        methodChannel.invokeMethod("send","sssssss");
+        methodChannel = new MethodChannel(flutterEngine.getDartExecutor(), "gogogo");
         methodChannel.setMethodCallHandler(new MethodChannel.MethodCallHandler() {
             @Override
             public void onMethodCall(@NonNull MethodCall methodCall, @NonNull MethodChannel.Result result) {
@@ -109,6 +143,7 @@ public class MainEmbeddingActivity extends FlutterActivity {
                         //给flutter端的返回值
                         result.success("MethodChannelPlugin收到：这个是Android 给flutter的响应传递过去的值");
                         TLog.e("MainEmbeddingActivity", methodCall.arguments.toString());
+                        valueTv.setText(methodCall.arguments.toString());
 //                        if (activity instanceof FlutterAppActivity) {
 //                            ((FlutterAppActivity) activity).showContent(methodCall.arguments);
 //                        }
@@ -119,23 +154,42 @@ public class MainEmbeddingActivity extends FlutterActivity {
                 }
             }
         });
-        TLog.e("getCachedEngineId()","id="+getCachedEngineId());
+        TLog.e("getCachedEngineId()", "id=" + getCachedEngineId());
     }
 
-    private void startFlutter(String channel) {
+    @Override
+    public void cleanUpFlutterEngine(@NonNull FlutterEngine flutterEngine) {
+        super.cleanUpFlutterEngine(flutterEngine);
+        FlutterEngineCache
+                .getInstance()
+                .remove(channel_engine_id_1);
+        FlutterEngineCache
+                .getInstance()
+                .remove(channel_engine_id_2);
+
+    }
+
+    private void startFlutter(String engine_id) {
 
 //        Intent customFlutter =FlutterActivity.withNewEngine()
 //                .initialRoute(channel)
 //                .build(this);
 //        startActivity(customFlutter);
 
-        Intent customFlutter =FlutterActivity.withCachedEngine("my_engine_id")
+        Intent customFlutter = FlutterActivity.withCachedEngine(engine_id)
+                .build(this);
+        startActivity(customFlutter);
+    }
+    private void startFlutterAct(String channelName) {
+
+        Intent customFlutter =FlutterActivity.withNewEngine()
+                .initialRoute(channelName)
                 .build(this);
         startActivity(customFlutter);
     }
 
     private void startFlutterDef() {
-        Intent customFlutter =createDefaultIntent(this);
+        Intent customFlutter = createDefaultIntent(this);
         startActivity(customFlutter);
     }
 
@@ -143,6 +197,7 @@ public class MainEmbeddingActivity extends FlutterActivity {
     public void invokeMethod(String method, Object o) {
         methodChannel.invokeMethod(method, o);
     }
+
     //调用flutter端方法，有返回值
     public void invokeMethod(String method, Object o, MethodChannel.Result result) {
         methodChannel.invokeMethod(method, o, result);
