@@ -114,7 +114,8 @@ public class MainActivity extends AppCompatActivity {
                         }   else if ("mylog".equals(datas.get(position))) {
                             MyLogAct.show(MainActivity.this);
                         }  else if ("flutter".equals(datas.get(position))) {
-                            MainFlutterActivity2.show(MainActivity.this);
+                            startFlutterForRoute("login");
+//                            MainFlutterActivity2.show(MainActivity.this);
 //                            startFlutterDef();
 //                            startFlutter("seconds");
                         } else if ("flutter_teshu".equals(datas.get(position))) {
@@ -158,6 +159,10 @@ public class MainActivity extends AppCompatActivity {
         startActivity(customFlutter);
     }
 
+    private void startFlutterForRoute(String route) {
+        Intent customFlutter = FlutterActivity.withNewEngine().initialRoute(route).build(this);
+        startActivity(customFlutter);
+    }
     private void startFlutterDef() {
         Intent customFlutter = FlutterActivity.createDefaultIntent(this);
         startActivity(customFlutter);

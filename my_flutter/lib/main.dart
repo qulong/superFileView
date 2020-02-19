@@ -7,6 +7,7 @@ import './RouteFlutter.dart';
 import './f_f_entity.dart';
 import './MethodCallWidget.dart';
 import './MethodCallWidget2.dart';
+import './dyrs/LoginAct.dart';
 
 void main() => runApp(MyApp());
 
@@ -37,6 +38,9 @@ Widget _widgetForRoute(String route) {
       return MethodCallWidget2();
     case "th":
       return RouteFlutter();
+
+    case "login":
+      return LoginAct();
 
     default:
       return MyHomePage(title: "canshu");

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import './utils/Toast.dart';
+import './dyrs/LoginAct.dart';
 
 class MethodCallWidget2 extends StatefulWidget {
 //  static const RouteName = "/seconds";
@@ -54,7 +55,7 @@ class _MethodCallWidgetState extends State<MethodCallWidget2> {
   //flutter调用native的相应方法
   void _loadNativeData() async {
     Future<String> future =
-    _methodChannel.invokeMethod("loadData", "load Data go");
+        _methodChannel.invokeMethod("loadData", "load Data go");
     future.then((message) {
       print("loadData from native " + message);
       setState(() {
@@ -63,9 +64,16 @@ class _MethodCallWidgetState extends State<MethodCallWidget2> {
       });
     });
   }
-
-
-
+void _finishView(){
+  //跳转并关闭当前页面
+//  Navigator.pushAndRemoveUntil(
+//    context,
+//    new MaterialPageRoute(builder: (context) => new MyHomePage()),
+//        (route) => route == null,
+//  );
+  Navigator.of(context).pop(1);
+//    Navigator.pop(context);
+}
   @override
   Widget build(BuildContext context) {
 //    var strName = ModalRoute.of(context).settings.arguments;
@@ -73,14 +81,13 @@ class _MethodCallWidgetState extends State<MethodCallWidget2> {
 
     return Scaffold(
       appBar: AppBar(
-        leading: BackButton(),
+        leading: BackButton(onPressed: ()=>_finishView(),),
         title: Text("第二个页面method call 2" + _resultContent),
         centerTitle: true,
       ),
       body: MyList(items: new List<String>.generate(50, (i) => "哈22哈哈 $i")),
       floatingActionButton: FloatingActionButton(
-        onPressed: () =>
-          ok()
+        onPressed: () => ok()
 //          Navigator.push(context,
 //          MaterialPageRoute(builder: (context) => new NavigationHome()))
         ,
@@ -89,9 +96,13 @@ class _MethodCallWidgetState extends State<MethodCallWidget2> {
       ),
     );
   }
-  void ok(){
+
+  void ok() {
     Toast.toast(context, "哈哈哈哈哈");
     _loadNativeData();
+    Navigator.push(context, new MaterialPageRoute(builder: (context){
+      return LoginAct();
+    },));
   }
 }
 
@@ -99,6 +110,11 @@ class MyList extends StatelessWidget {
   final List<String> items;
 
   MyList({Key key, @required this.items}) : super(key: key);
+
+  _itemPress(context,index) {
+    print("list dianji shijian aaaaa");
+    Toast.toast(context, "点击了"+index.toString()+"ge");
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -109,7 +125,7 @@ class MyList extends StatelessWidget {
           leading: Icon(Icons.accessible),
           subtitle: new Text('subtitle ${items[index]} $index'),
           title: new Text('${items[index]}'),
-//          onTap: ,
+          onTap: () => _itemPress(context,index),
           trailing: Icon(Icons.battery_alert),
         );
       },

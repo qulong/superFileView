@@ -8,9 +8,7 @@ import com.silang.superfileview.flutter.plugin.FlutterPluginJumpToAct;
 import com.silang.superfileview.flutter.plugin.MyPlugin;
 
 import io.flutter.app.FlutterActivity;
-import io.flutter.facade.Flutter;
 import io.flutter.plugin.common.PluginRegistry;
-import io.flutter.plugins.GeneratedPluginRegistrant;
 import io.flutter.view.FlutterView;
 
 
