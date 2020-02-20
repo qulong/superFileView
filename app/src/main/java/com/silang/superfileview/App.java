@@ -11,9 +11,13 @@ import android.os.Build;
 
 import com.tencent.smtt.sdk.QbSdk;
 
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+
 import io.flutter.embedding.engine.FlutterEngine;
 import io.flutter.embedding.engine.FlutterEngineCache;
 import io.flutter.embedding.engine.dart.DartExecutor;
+import io.flutter.view.FlutterMain;
 //import io.flutter.view.FlutterMain;
 
 /**
@@ -31,8 +35,8 @@ public class App extends Application {
         super.onCreate();
         context = getApplicationContext();
         //增加这句话
-        QbSdk.initX5Environment(this, null);
-        ExceptionHandler.getInstance().initConfig(this);
+//        QbSdk.initX5Environment(this, null);
+//        ExceptionHandler.getInstance().initConfig(this);
 
 
         // Instantiate a FlutterEngine.
@@ -48,7 +52,17 @@ public class App extends Application {
 //                .getInstance()
 //                .put("my_engine_id", flutterEngine);
 
-//        FlutterMain.startInitialization(this);
+        FlutterMain.startInitialization(context);
+     ExecutorService service= Executors.newSingleThreadExecutor();
+     service.submit(new Runnable() {
+         @Override
+         public void run() {
+             //增加这句话
+             QbSdk.initX5Environment(context, null);
+             ExceptionHandler.getInstance().initConfig(context);
+
+         }
+     });
     }
 
     public static Context getContext() {

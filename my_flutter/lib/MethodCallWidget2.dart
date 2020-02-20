@@ -13,7 +13,7 @@ class MethodCallWidget2 extends StatefulWidget {
 class _MethodCallWidgetState extends State<MethodCallWidget2> {
   MethodChannel _methodChannel = MethodChannel("channel2");
   String _content;
-
+  List<String> ss = new List<String>.generate(50, (i) => "哈22哈哈 $i");
   @override
   void initState() {
     // TODO: implement initState
@@ -64,28 +64,38 @@ class _MethodCallWidgetState extends State<MethodCallWidget2> {
       });
     });
   }
-void _finishView(){
-  //跳转并关闭当前页面
+
+  void _finishView() {
+    //跳转并关闭当前页面
 //  Navigator.pushAndRemoveUntil(
 //    context,
 //    new MaterialPageRoute(builder: (context) => new MyHomePage()),
 //        (route) => route == null,
 //  );
-  Navigator.of(context).pop(1);
+//SystemNavigator.pop()
+    Navigator.of(context).pop(1);
 //    Navigator.pop(context);
-}
+  }
+
+  void itemClick(index) {
+    setState(() {
+      ss[index] += "点击后";
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
 //    var strName = ModalRoute.of(context).settings.arguments;
     // TODO: implement build
-
     return Scaffold(
       appBar: AppBar(
-        leading: BackButton(onPressed: ()=>_finishView(),),
+        leading: BackButton(
+          onPressed: () => _finishView(),
+        ),
         title: Text("第二个页面method call 2" + _resultContent),
         centerTitle: true,
       ),
-      body: MyList(items: new List<String>.generate(50, (i) => "哈22哈哈 $i")),
+      body: MyList(items: ss, itemClickCallBack: itemClick),
       floatingActionButton: FloatingActionButton(
         onPressed: () => ok()
 //          Navigator.push(context,
@@ -100,20 +110,24 @@ void _finishView(){
   void ok() {
     Toast.toast(context, "哈哈哈哈哈");
     _loadNativeData();
-    Navigator.push(context, new MaterialPageRoute(builder: (context){
-      return LoginAct();
-    },));
+    Navigator.push(context, new MaterialPageRoute(
+      builder: (context) {
+        return LoginAct();
+      },
+    ));
   }
 }
 
 class MyList extends StatelessWidget {
   final List<String> items;
+  Function itemClickCallBack;
+  MyList({Key key, @required this.items, this.itemClickCallBack})
+      : super(key: key);
 
-  MyList({Key key, @required this.items}) : super(key: key);
-
-  _itemPress(context,index) {
+  _itemPress(context, index) {
     print("list dianji shijian aaaaa");
-    Toast.toast(context, "点击了"+index.toString()+"ge");
+    Toast.toast(context, "点击了" + index.toString() + "ge");
+    items[index] += "点击改变了";
   }
 
   @override
@@ -125,7 +139,7 @@ class MyList extends StatelessWidget {
           leading: Icon(Icons.accessible),
           subtitle: new Text('subtitle ${items[index]} $index'),
           title: new Text('${items[index]}'),
-          onTap: () => _itemPress(context,index),
+          onTap: () => itemClickCallBack(index),
           trailing: Icon(Icons.battery_alert),
         );
       },

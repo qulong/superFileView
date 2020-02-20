@@ -36,4 +36,12 @@ class UserInfoConstant {
    * 用户TOKEN
    */
   static String TOKEN = "";
+  /**
+   * USER_CODE
+   */
+   static String USER_CODE = "";
+  /**
+   * 机器唯一标识吗
+   */
+  static String DeviceId = "";
 }

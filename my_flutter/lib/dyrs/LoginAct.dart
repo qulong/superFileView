@@ -1,11 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:dio/dio.dart';
+import 'package:my_flutter/utils/MyLog.dart';
 import 'UrlApi.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import './beans/CommentData.dart';
 import './beans/LoginBeans.dart';
 import './beans/json_bean_login_entity.dart';
+import '../utils/DeviceInfoUtils.dart';
+import 'beans/UserInfoConstant.dart';
+import 'net/NetManager.dart';
 
 class LoginAct extends StatefulWidget {
   @override
@@ -18,13 +22,20 @@ class LoginAct extends StatefulWidget {
 class LoginStatus extends State<LoginAct> {
   String phoneNumber = '';
   String pwd = '';
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
 //    final controller = TextEditingController();
 //    controller.addListener(() {
 //      print('input ${controller.text}');
 //    });
-
+    DeviceInfoUtils.getDeviceInfo();
     // TODO: implement build
     return Scaffold(
       appBar: AppBar(
@@ -140,7 +151,15 @@ class LoginStatus extends State<LoginAct> {
                 _submit();
               },
             ),
-          )
+          ),
+    FlatButton(onPressed: (){
+    _incrementCounter();
+    }, child: Text("测试 sharePreference")),
+    FlatButton(onPressed: (){
+
+    var aaa=_loadShareValue() as int;
+    print("aaa"+aaa.toString());
+    }, child: Text("测试 sharePreference"))
         ],
       ),
     );
@@ -153,47 +172,100 @@ class LoginStatus extends State<LoginAct> {
     }
     if (pwd.isNotEmpty) {
       print("pwd:=" + pwd);
+      _incrementCounter();
     }
     loadData();
-    loginLoading();
+//    loginLoading();
   }
 
-  void loadData() async {
-    Dio dio = Dio();
-    Response response = await dio
-        .post(UrlApi.GETSECURITYCODE, data: {"phoneNumber": '15701152205'});
-    print("=====================org+++++++++++++++++");
-    print(response);
-    var bean=response.data['data'];
-    //{"result":true,"errcode":"","msg":"操作成功!","data":{"outId":"6e70a0fc179d401780e136b396a8fb42"}}
-//    var bean = {"result": true, "errcode": "", "msg": "操作成功!", "data": {}};
-     Map<String,dynamic> d = bean['data'];
-    var id = d['outId'];
-    print(id);
-    print("获取验证码：" + bean['msg']);
-//loginLoading();
+  void loadData() {
+    NetManager.getData(
+        UrlApi.GETSECURITYCODE,
+        (data) {
+          print("call success back");
+          print(data);
+          login();
+        },
+        params: {"phoneNumber": "15701152205"},
+        errorCallBack: (errormsg) {
+          print(errormsg);
+        });
   }
-  void loginLoading() async{
+
+  login() {
+    NetManager.postData(
+        UrlApi.GETLOGIN,
+        (data) {
+          print("call success back");
+          MyLog.init(isDebug: true);
+          MyLog.d(data);
+          UserInfoConstant.TOKEN = data['data']['token'];
+          UserInfoConstant.USER_CODE = data['data']['code'];
+          UserInfoConstant.CompanyCode = data['data']['superiorCompanyCode'];
+          UserInfoConstant.CompanyName = data['data']['superiorCompanyName'];
+          UserInfoConstant.NAME = data['data']['name'];
+        },
+        params: {"phoneNumber": '15701152205', 'securityCode': '123456'},
+        errorCallBack: (errormsg) {
+          print(errormsg);
+        });
+  }
+
+//  void loadData() async {
+//    Dio dio = Dio();
+//    Response response = await dio
+//        .post(UrlApi.GETSECURITYCODE, data: {"phoneNumber": '15701152205'});
+//    print("=====================org+++++++++++++++++");
+//    print(response);
+//    var bean = response.data['data'];
+//    //{"result":true,"errcode":"","msg":"操作成功!","data":{"outId":"6e70a0fc179d401780e136b396a8fb42"}}
+////    var bean = {"result": true, "errcode": "", "msg": "操作成功!", "data": {}};
+//    var id = bean['outId'];
+//    print(id);
+//    print("获取验证码：" + bean['msg'].toString());
+////    loginLoading();
+//    NetManager.postData(
+//        UrlApi.GETLOGIN,
+//        (data) {
+//          print("call success back");
+//          print(data);
+//        },
+//        params: {"phoneNumber": '15701152205', 'securityCode': '123456'},
+//        errorCallBack: (errormsg) {
+//          print(errormsg);
+//        });
+//  }
+
+  void loginLoading() async {
     Dio dio = Dio();
-    Response response = await dio
-        .post(UrlApi.GETLOGIN, data: {"phoneNumber": '15701152205','securityCode':'123456',"source": "android"});
+    Response response = await dio.post(UrlApi.GETLOGIN, data: {
+      "phoneNumber": '15701152205',
+      'securityCode': '123456',
+      "source": "android"
+    });
     print("=====================org+++++++++++++++++");
     print(response.data['msg']);
     print(response.data['data'].toString());
-    var datas=response.data['data'];
-    if(datas!=null&&datas!=""){
-     bool ok= datas is String ;
-     print("string ok:"+ok.toString());
-     bool kk=datas is Object;
-     print("kkk"+kk.toString());
+    var datas = response.data['data'];
+    if (datas != null && datas != "") {
+      bool ok = datas is String;
+      print("string ok:" + ok.toString());
+      bool kk = datas is Object;
+      print("kkk" + kk.toString());
     }
-
   }
+
   _incrementCounter() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     int counter = (prefs.getInt('counter') ?? 0) + 1;
     print('Pressed $counter times.');
     await prefs.setInt('counter', counter);
-
+  }
+  _loadShareValue() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    int counter =prefs.getInt('counter') ?? 0;
+    print('load value $counter times.');
+//    await prefs.setInt('counter', counter);
+  return counter;
   }
 }

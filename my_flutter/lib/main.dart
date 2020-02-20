@@ -9,7 +9,10 @@ import './MethodCallWidget.dart';
 import './MethodCallWidget2.dart';
 import './dyrs/LoginAct.dart';
 
-void main() => runApp(MyApp());
+void main() {
+  WidgetsFlutterBinding.ensureInitialized();
+  runApp(MyApp());
+}
 
 //void main(){
 //  SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp])
