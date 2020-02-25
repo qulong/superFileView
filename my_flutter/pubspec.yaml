@@ -29,6 +29,7 @@ dependencies:
   cupertino_icons: ^0.1.2
   json_serializable: ^3.2.5
   dio: ^3.0.8
+  pull_to_refresh: ^1.5.8
   shared_preferences: ^0.5.6+1
   device_info: ^0.4.1+4
   #https://github.com/alibaba/flutter_boost/blob/master/README_CN.md

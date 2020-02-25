@@ -2,6 +2,8 @@ import 'dart:ui';
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:my_flutter/xiansuo/ClueActivity.dart';
+import 'package:my_flutter/xiansuo/TabClue.dart';
 import './Seconds.dart';
 import './RouteFlutter.dart';
 import './f_f_entity.dart';
@@ -172,6 +174,10 @@ class _MyHomePageState extends State<MyHomePage> {
               onPressed: () => jumpNative("Tag1", jsonparam: ""),
               child: Text("跳转到原生指定页面"),
             ),
+            RaisedButton(
+              onPressed: jumpClueView,
+              child: Text("跳转到线索页面"),
+            ),
           ],
         ),
       ),
@@ -189,6 +195,13 @@ class _MyHomePageState extends State<MyHomePage> {
 //      String json = jsonEncode(paramsMap);
   var flutter=FFEntity(name: "测试",value: "哈哈哈哈");
     MyFlutterPlugin.openNativePage(tag, paramsJson: jsonEncode(flutter));
+  }
+
+  void jumpClueView() {
+    Navigator.push(context, new MaterialPageRoute(builder: (cxt){
+//return ClueActivity();
+return TabClue();
+    }),);
   }
 }
 
