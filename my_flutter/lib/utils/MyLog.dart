@@ -27,9 +27,16 @@ class MyLog {
   }
 
   //仅Debug模式可见
+  //防止数据过多打印不全问题
   static void d(dynamic obj) {
     if (_isDebug) {
       _log(obj.toString());
+    }
+  }
+  //原始打印方法，
+ static void print_org(dynamic obj) {
+    if (_isDebug) {
+      print(obj);
     }
   }
 

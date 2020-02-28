@@ -1,70 +1,83 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
+import 'package:event_bus/event_bus.dart';
+import 'package:my_flutter/eventbus/TabViewChangeEvent.dart';
+import 'package:my_flutter/utils/ColorUtils.dart';
 
 class BaseTitleBar extends StatelessWidget {
+
   String title;
-  IconData leftIcon = Icons.arrow_back_ios;
+  String leftIcon = 'images/black_back.png';
+  String rightIconUrl;
   String rightText;
-  final VoidCallback rightClick;
-  final Function selectedClick;
-  List<String> centerTabTitle;
+  final Function rightClick,leftBackClick;
 
-  BaseTitleBar(this.title,this.selectedClick,
-      {this.leftIcon, this.rightText, this.centerTabTitle, this.rightClick});
+  ///中间自定义控件
+  Widget centerView;
 
-  Widget centerTitle() {
-    if (this.centerTabTitle != null && this.centerTabTitle.length > 0) {
-      return CenterFullView(
-          title: this.centerTabTitle, rightClick: this.rightClick,selectedTab: this.selectedClick,);
-    } else {
-      return new Text(this.title);
-    }
-  }
+
+  BaseTitleBar(this.title,
+      {this.leftIcon='images/black_back.png',this.leftBackClick,
+      this.rightText,this.rightIconUrl,
+      this.centerView,this.rightClick});
 
   @override
   Widget build(BuildContext context) {
     return new AppBar(
-      flexibleSpace: Container(
-        /// 实现渐变色的效果
-        decoration: BoxDecoration(
-          gradient: LinearGradient(
-            colors: [
-              Color.fromRGBO(26, 155, 214, 1),
-              Color.fromRGBO(54, 209, 193, 1)
-            ],
-          ),
-        ),
-        child: centerTitle(),
-      ),
+//      flexibleSpace: Container(
+//        /// 实现渐变色的效果
+//        decoration: BoxDecoration(
+//          gradient: LinearGradient(
+//            colors: [
+//              Color.fromRGBO(26, 155, 214, 1),
+//              Color.fromRGBO(54, 209, 193, 1)
+//            ],
+//          ),
+//        ),
+//      ),
+      title:  Text(this.title,style: TextStyle(fontSize: 16,color: ColorUtils.appbarTitleColor),),
       leading: new IconButton(
         /// 左边图标，视情况而定，参数
-        icon: Icon(this.leftIcon),
+        icon: Image.asset(leftIcon,width: 22,height: 18,fit: BoxFit.contain,),
         color: Colors.white,
         onPressed: () {
-          Navigator.pop(context);
+          if(this.leftBackClick!=null){
+            this.leftBackClick();
+          }else{
+            Navigator.pop(context);
+          }
         },
       ),
       brightness: Brightness.dark,
-      elevation: 2.0,
+      elevation: 0.0,
       centerTitle: true,
       actions: <Widget>[
         /// 右边的 布局，自己可以添加，是一个widget的一个集合，自已需求添加即可，我这里写了一个Text，和text的点击事件，
-        new RightView(title: rightText, rightClick: rightClick),
+        new RightView(title: rightText,rightIconUrl: this.rightIconUrl, rightClick: rightClick),
       ],
     );
   }
 }
 
 /// 中间list 布局，以及点击事件
-///
+///暂时不用
 class CenterFullView extends StatefulWidget {
-  List<String> title;
+  List<String> titleList;
   VoidCallback rightClick;
-Function selectedTab;
-  CenterFullView({this.title, this.rightClick,this.selectedTab});
+  Function selectedTab;
+  String defTitle;
+  EventBus eventBus;
+  CenterFullView(
+      {this.titleList, this.rightClick, this.selectedTab, this.defTitle,this.eventBus});
   @override
   State<StatefulWidget> createState() {
     // TODO: implement createState
-    return CenterState(title: title, rightClick: rightClick,selectedBack: this.selectedTab);
+    return CenterState(
+        title: titleList,
+        rightClick: rightClick,
+        selectedBack: this.selectedTab,
+        selectedTitle: this.defTitle,eventBus: this.eventBus);
   }
 }
 
@@ -78,7 +91,12 @@ class CenterState extends State<CenterFullView> {
   Color defTitleColor = Colors.grey;
   Color selTitleColor = Colors.white;
   String selectedTitle;
-  CenterState({this.title, this.rightClick,this.selectedBack});
+  int selectedIndex;
+  EventBus eventBus;
+
+  StreamSubscription streamSubscription;
+  CenterState(
+      {this.title, this.rightClick, this.selectedBack, this.selectedTitle,this.eventBus});
 
   Color _titleColor(String t) {
     if (selectedTitle == t) {
@@ -95,12 +113,28 @@ class CenterState extends State<CenterFullView> {
       return this.defColor;
     }
   }
-
+  @override
+  void dispose() {
+    // TODO: implement dispose
+    super.dispose();
+    if(streamSubscription!=null){
+      streamSubscription.cancel();
+    }
+  }
   @override
   void initState() {
     // TODO: implement initState
     selectedTitle = this.title[0];
     super.initState();
+    streamSubscription= this.eventBus.on<TabViewChangeEvent>().listen((event) {
+      if(event.index!=this.selectedIndex){
+        print("===========eventbus========");
+        print(event.selected);
+        setState(() {
+          selectedTitle = event.selected;
+        });
+      }
+    });
   }
 
   @override
@@ -141,9 +175,10 @@ class CenterState extends State<CenterFullView> {
               onTap: () {
                 setState(() {
                   selectedTitle = t;
+                  selectedIndex = title.indexOf(t);
                 });
-                if(this.selectedBack!=null){
-                  this.selectedBack(t);
+                if (this.selectedBack != null) {
+                  this.selectedBack(t, selectedIndex);
                 }
               },
             );
@@ -160,9 +195,10 @@ class CenterState extends State<CenterFullView> {
 /// 右边的 布局，以及点击事件
 class RightView extends StatelessWidget {
   String title;
-  VoidCallback rightClick;
+  String rightIconUrl;
+  Function rightClick;
 
-  RightView({this.title, this.rightClick});
+  RightView({this.title, this.rightIconUrl ,this.rightClick});
 
   @override
   Widget build(BuildContext context) {
@@ -174,14 +210,23 @@ class RightView extends StatelessWidget {
         child: GestureDetector(
           child: Text(
             this.title,
-            style: TextStyle(color: Colors.white, fontSize: 18.0),
+            style: TextStyle(color: Colors.blue, fontSize: 16.0),
           ),
           onTap: this.rightClick,
         ),
       );
+    } else if(rightIconUrl!=null){
+      containView = new GestureDetector(child: Container(
+        alignment: Alignment.center,
+        constraints: BoxConstraints(minHeight: 40),
+        padding: EdgeInsets.all(10.0),
+        child: Image.asset(this.rightIconUrl,
+              height: 22, width: 22, fit: BoxFit.contain),
+      ), onTap: this.rightClick,);
     } else {
       containView = Text("");
     }
     return containView;
+
   }
 }

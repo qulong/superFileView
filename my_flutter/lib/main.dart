@@ -3,6 +3,8 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:my_flutter/xiansuo/ClueActivity.dart';
+import 'package:my_flutter/xiansuo/CustomerInfoActivity.dart';
+import 'package:my_flutter/xiansuo/InvalidCueActivity.dart';
 import 'package:my_flutter/xiansuo/TabClue.dart';
 import './Seconds.dart';
 import './RouteFlutter.dart';
@@ -60,6 +62,7 @@ class MyApp extends StatelessWidget {
     print(window);
     print(window.defaultRouteName);
     return MaterialApp(
+      theme: ThemeData(primaryColor: Colors.white),
       home: _widgetForRoute(window.defaultRouteName),
     );
   }
@@ -171,12 +174,35 @@ class _MyHomePageState extends State<MyHomePage> {
               style: Theme.of(context).textTheme.display1,
             ),
             RaisedButton(
+              onPressed: (){
+                Navigator.push(context, MaterialPageRoute(builder: (ct){
+                  return LoginAct();
+                }));
+              },
+              child: Text("login"),
+            ),
+            RaisedButton(
               onPressed: () => jumpNative("Tag1", jsonparam: ""),
               child: Text("跳转到原生指定页面"),
             ),
             RaisedButton(
               onPressed: jumpClueView,
               child: Text("跳转到线索页面"),
+            ), RaisedButton(
+              onPressed: (){
+                Navigator.push(context, MaterialPageRoute(builder: (ct){
+                  return InvalidCueActivity();
+                }));
+              },
+              child: Text("跳转到  无效线索页面"),
+            ),
+            RaisedButton(
+              onPressed: (){
+                Navigator.push(context, MaterialPageRoute(builder: (ct){
+                  return CustomerInfoActivity();
+                }));
+              },
+              child: Text("跳转到  客户资料"),
             ),
           ],
         ),

@@ -6,7 +6,7 @@ class BaseViewBar extends PreferredSize {
   @override
   final Size preferredSize;
 
-  BaseViewBar({this.preferredSize, this.childView});
+  BaseViewBar({this.preferredSize=const Size.fromHeight(50.0), this.childView});
 
   @override
   Widget build(BuildContext context) {
