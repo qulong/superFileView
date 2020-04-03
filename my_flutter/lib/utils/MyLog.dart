@@ -5,12 +5,12 @@ class MyLog {
   static var _split =
       "$_separator$_separator$_separator$_separator$_separator$_separator$_separator$_separator$_separator";
   static var _title = "Def-Log";
-  static var _isDebug = true;
+  static bool _isDebug = true;
   static int _limitLength = 800;
   static String _startLine = "$_split$_title$_split";
   static String _endLine = "$_split$_separator$_separator$_separator$_split";
 
-  static void init({String title, @required bool isDebug, int limitLength}) {
+  static void init({String title,bool isDebug=true, int limitLength}) {
     _title = title;
     _isDebug = isDebug;
     _limitLength = limitLength ??= _limitLength;
@@ -37,6 +37,23 @@ class MyLog {
  static void print_org(dynamic obj) {
     if (_isDebug) {
       print(obj);
+    }
+  }
+
+  static int _limit_line_Length = 800;
+ //原始打印方法，
+ static void print_more_line(dynamic obj) {
+    if (_isDebug) {
+      var msg=obj.toString();
+      var size=msg.length;
+      int each=(msg.length~/_limit_line_Length).ceil();
+      for(int i=0;i<=each;i++){
+        int end=(i+1)*_limit_line_Length;
+        if(end>=size){
+          end=size;
+        }
+        print(msg.substring(i*_limit_line_Length,end));
+      }
     }
   }
 

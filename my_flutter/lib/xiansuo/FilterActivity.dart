@@ -29,6 +29,7 @@ _titleTextStyle({double size = 14, Color cr = ColorUtils.c333333_60}) {
 }
 
 class FilterState extends State<FilterView> {
+  bool selected=false;
   @override
   void initState() {
     // TODO: implement initState
@@ -232,14 +233,18 @@ class FilterState extends State<FilterView> {
                 width: 100,
                 height: 30,
                 child: FlatButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    setState(() {
+                      selected=!selected;
+                    });
+                  },
                   shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(30)),
-                  color: ColorUtils.cF4F4F4,
+                  color: selected? ColorUtils.cE4B974:ColorUtils.cF4F4F4,
                   child: Text(
                     '重要',
                     style:
-                        TextStyle(fontSize: 12, color: ColorUtils.c333333_30),
+                        TextStyle(fontSize: 12, color:selected?  ColorUtils.c444444:ColorUtils.c333333_30),
                   ),
                 ),
               ), SizedBox(

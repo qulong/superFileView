@@ -35,13 +35,13 @@ class UserInfoConstant {
   /**
    * 用户TOKEN
    */
-  static String TOKEN = "";
+  static String TOKEN = "lBdporRJkny3EEX92wbVPQ==";
   /**
    * USER_CODE
    */
-   static String USER_CODE = "";
+   static String USER_CODE = "User1906180305";
   /**
    * 机器唯一标识吗
    */
-  static String DeviceId = "";
+  static String DeviceId = "aimei865166010224213";
 }

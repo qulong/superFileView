@@ -73,6 +73,7 @@ public class MainEmbeddingActivity extends FlutterActivity {
         FlutterEngine flutterEngine = new FlutterEngine(MainEmbeddingActivity.this);
         flutterEngine.getNavigationChannel().setInitialRoute("chan2");
         flutterEngine.getDartExecutor().executeDartEntrypoint(DartExecutor.DartEntrypoint.createDefault());
+        flutterEngine.getNavigationChannel().pushRoute("");
         FlutterEngineCache.getInstance().put(channel_engine_id_2, flutterEngine);
         methodChannel = new MethodChannel(flutterEngine.getDartExecutor(), "channel2");
         methodChannel.setMethodCallHandler(new MethodChannel.MethodCallHandler() {

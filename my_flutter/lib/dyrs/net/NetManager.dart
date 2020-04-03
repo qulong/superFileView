@@ -3,6 +3,7 @@ import 'dart:io';
 
 import 'package:dio/dio.dart';
 import 'package:my_flutter/dyrs/beans/UserInfoConstant.dart';
+import 'package:my_flutter/utils/MyLog.dart';
 import 'package:my_flutter/utils/StringUtils.dart';
 
 class NetManager {
@@ -15,7 +16,7 @@ class NetManager {
    * get 请求
    */
   static getData(String url, Function successCallback,
-      {Map<String, dynamic> params, Function errorCallBack}) async {
+      {Map<String, dynamic> params, Function errorCallBack,Function loadingClose}) async {
 //    if (params != null && params.isNotEmpty) {
 //      StringBuffer stringBuffer = new StringBuffer("?");
 //      params.forEach((key, value) {
@@ -26,33 +27,27 @@ class NetManager {
 //      url += paramStr;
 //    }
     _request(url, successCallback,
-        method: GET, params: params, errorCallBack: errorCallBack);
+        method: GET, params: params, errorCallBack: errorCallBack,loadingFunc:loadingClose);
   }
 
   /**
    * Post请求
    */
   static postData(String url, Function successCallback,
-      {Map<String, dynamic> params, Function errorCallBack}) async {
+      {Map<String, dynamic> params, Function errorCallBack,Function loadingClose}) async {
     _request(url, successCallback,
-        method: POST, params: params, errorCallBack: errorCallBack);
+        method: POST, params: params, errorCallBack: errorCallBack,loadingFunc:loadingClose);
   }
 
-  static void _request(String url, Function successCallback,
+  static Future _request(String url, Function successCallback,
       {String method,
       Map<String, dynamic> params,
-      Function errorCallBack}) async {
-    print("==========url=============");
-    print("url = $url");
+      Function errorCallBack,Function loadingFunc}) async {
+    MyLog.print_org("==========url=============");
+    MyLog.print_org("url = $url");
     String errorMsg = "";
     int statusCode;
 
-    // if (!StringUtils.isEmptyNull(Datas.TOKEN)) {
-//    headers.put("token", Datas.TOKEN);
-//  }
-//  headers.put("signal", Datas.DeviceId);
-//  headers.put("userCode", Datas.USER_CODE);
-//  headers.put("source", Datas.source);
     Map<String, dynamic> head = Map();
     if (StringUtils.isNotEmp(UserInfoConstant.TOKEN)) {
       head["token"] = UserInfoConstant.TOKEN;
@@ -81,14 +76,14 @@ class NetManager {
         sendTimeout: TIMEOUT_SEND,
       );
 
-      print("==========param=============");
-      print(params);
-      print("==========header=============");
-      print(head);
-      print("==========baseOptions=============");
-      print(baseOptions);
-      print("==========options=============");
-      print(options);
+      MyLog.print_org("==========param=============");
+      MyLog.print_org(params);
+      MyLog.print_org("==========header=============");
+      MyLog.print_org(head);
+      MyLog.print_org("==========baseOptions=============");
+      MyLog.print_org(baseOptions);
+      MyLog.print_org("==========options=============");
+      MyLog.print_org(options);
       Dio dio = new Dio(baseOptions);
       if (method == GET) {
         response =
@@ -103,20 +98,30 @@ class NetManager {
         _handError(errorCallBack, errorMsg);
       } else {
         if (successCallback != null) {
-          print('================org data back===============');
-          var data =response.data; //json.decode(response.toString()); //对数据进行Json转化
-          print('================org response.data===============');
-          print(data);
-          successCallback(data);
+          MyLog.print_org('================org data back===============');
+          var data =response.data;
+          //json.decode(response.toString()); //对数据进行Json转化
+          MyLog.d(data);
+          MyLog.print_org('================org response.data===============');
+          //{result: false, msg: 您的账号已在其他设备登录，请重新登录！, data: {}, errcode: 3105}
+          if(data['result']){
+            successCallback(data['data']);
+          }else{
+            errorCallBack(data['msg']);
+          }
         }
       }
     } catch (exception) {
       _handError(errorCallBack, exception.toString());
+    }finally{
+      if(loadingFunc!=null){
+        loadingFunc();
+      }
     }
   }
 
   static _handError(Function function, String msg) {
-    print('================err error===============');
+    MyLog.print_org('================err error===============');
     function(msg);
   }
 }

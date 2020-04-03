@@ -37,7 +37,7 @@ class StateViewChild extends State<ViewChild>
   void initState() {
     // TODO: implement initState
     super.initState();
-    MyLog.init(isDebug: true, title: 'tabview');
+    MyLog.init(title: 'tabview');
 
     _tabController = TabController(vsync: this, length: titleList.length);
     _tabController.addListener(() {

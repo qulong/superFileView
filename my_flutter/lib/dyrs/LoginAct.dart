@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:dio/dio.dart';
 import 'package:my_flutter/utils/MyLog.dart';
-import 'UrlApi.dart';
+import 'package:my_flutter/dyrs/net/UrlApi.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import './beans/CommentData.dart';
 import './beans/LoginBeans.dart';
@@ -197,7 +197,7 @@ class LoginStatus extends State<LoginAct> {
         UrlApi.GETLOGIN,
         (data) {
           print("call success back");
-          MyLog.init(isDebug: true);
+          MyLog.init();
           MyLog.d(data);
           UserInfoConstant.TOKEN = data['data']['token'];
           UserInfoConstant.USER_CODE = data['data']['code'];

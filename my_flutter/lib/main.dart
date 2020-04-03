@@ -2,6 +2,10 @@ import 'dart:ui';
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:my_flutter/RankingList.dart';
+import 'package:my_flutter/inherited/AppPage.dart';
+import 'package:my_flutter/provider/user_demo.dart';
+import 'package:my_flutter/view/sanjiao.dart';
 import 'package:my_flutter/xiansuo/ClueActivity.dart';
 import 'package:my_flutter/xiansuo/CustomerInfoActivity.dart';
 import 'package:my_flutter/xiansuo/InvalidCueActivity.dart';
@@ -12,6 +16,7 @@ import './f_f_entity.dart';
 import './MethodCallWidget.dart';
 import './MethodCallWidget2.dart';
 import './dyrs/LoginAct.dart';
+import 'package:my_flutter/utils/animationRoute.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -141,7 +146,7 @@ class _MyHomePageState extends State<MyHomePage> {
         centerTitle: true,
         leading: BackButton(),
       ),
-      backgroundColor: Colors.deepPurpleAccent,
+//      backgroundColor: Colors.deepPurpleAccent,
       body: Center(
         // Center is a layout widget. It takes a single child and positions it
         // in the middle of the parent.
@@ -162,6 +167,10 @@ class _MyHomePageState extends State<MyHomePage> {
           // horizontal).
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
+            CustomPaint(
+              painter: TrianglePainter(Colors.red),
+              size: Size(10, 10),
+            ),
             Text(
               'You have pushed the button this many times:',
               style: TextStyle(
@@ -187,8 +196,16 @@ class _MyHomePageState extends State<MyHomePage> {
             ),
             RaisedButton(
               onPressed: jumpClueView,
-              child: Text("跳转到线索页面"),
+              child: Text(" viewpager "),
             ), RaisedButton(
+              onPressed: (){
+                Navigator.push(context, MaterialPageRoute(builder: (ct){
+                  return ProviderD();
+//                  return AppPage();
+                }));
+              },
+              child: Text("数据共享测试"),
+            ),RaisedButton(
               onPressed: (){
                 Navigator.push(context, MaterialPageRoute(builder: (ct){
                   return InvalidCueActivity();
@@ -198,12 +215,14 @@ class _MyHomePageState extends State<MyHomePage> {
             ),
             RaisedButton(
               onPressed: (){
-                Navigator.push(context, MaterialPageRoute(builder: (ct){
-                  return CustomerInfoActivity();
-                }));
+                Navigator.push(context, CustomRouteSlideRight(CustomerInfoActivity()));
+//                Navigator.push(context, MaterialPageRoute(builder: (ct){
+//                  return CustomerInfoActivity();
+//                }));
               },
               child: Text("跳转到  客户资料"),
             ),
+            Text("time${getTime()}"),
           ],
         ),
       ),
@@ -214,7 +233,38 @@ class _MyHomePageState extends State<MyHomePage> {
       ), // This trailing comma makes auto-formatting nicer for build methods.
     );
   }
+String getTime(){
+    return timeFormateToString(DateTime.parse('2020-03-31T09:06:45Z'));
+}
+String timeFormateToString(DateTime time,{bool addUtcTime=true}) {
+    DateTime tempTime;
+    if(addUtcTime){
+      int s=time.millisecondsSinceEpoch+8*60*60*1000;
+tempTime=DateTime.fromMillisecondsSinceEpoch(s);
+      print(time);
+      print(tempTime);
+      //时间差 两个时间相差 小时数
+//      print('比较两个时间 差 小时数：${fiftyDaysFromNow.difference(fiftyDaysAgo)}');
 
+      print('本地时区简码：${time.timeZoneName}');
+
+      print('返回UTC与本地时差 小时数：${time.timeZoneOffset}');
+tempTime=time;
+    }else{
+      tempTime=time;
+    }
+    String y = tempTime.year.toString();
+    String m = _twoDigits(tempTime.month);
+    String d = _twoDigits(tempTime.day);
+    String h = _twoDigits(tempTime.hour);
+    String min = _twoDigits(tempTime.minute);
+    String sec = _twoDigits(tempTime.second);
+    return "$y-$m-$d $h:$min:$sec";
+  }
+  static String _twoDigits(int n) {
+    if (n >= 10) return "${n}";
+    return "0${n}";
+  }
   void jumpNative(String tag, {String jsonparam}) async{
 
 //     Map<String,String> paramsMap = {"param1": "value1", "param2": "value2", "param3": "value3"};
@@ -226,7 +276,9 @@ class _MyHomePageState extends State<MyHomePage> {
   void jumpClueView() {
     Navigator.push(context, new MaterialPageRoute(builder: (cxt){
 //return ClueActivity();
-return TabClue();
+//return TabClue();
+return RankingList();
+
     }),);
   }
 }

@@ -40,3 +40,13 @@ build/
 .ios/
 .flutter-plugins
 .flutter-plugins-dependencies
+images/cue_arrow_down.png
+lib/dialog/NetLoadingDialog.dart
+lib/dyrs/beans/CustomerInfoBean.dart
+lib/dyrs/beans/customerinfo_entity.dart
+lib/dyrs/net/UrlApi.dart
+lib/entity_factory.dart
+lib/utils/ImageUtils.dart
+lib/view/GroupList.dart
+lib/view/YcPopupWindowRoute.dart
+lib/view/popwindow.dart

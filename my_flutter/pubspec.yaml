@@ -71,6 +71,20 @@ flutter:
     - images/important_y_2x.png
     - images/important_black_2x.png
     - images/more_2x.png
+    - images/cue_arrow_down.png
+    - images/cloud_design_bg.png
+    - images/cloud_design_text.png
+    - images/copper.png
+    - images/golden.png
+    - images/crown_copper.png
+    - images/crown_golden.png
+    - images/crown_silver.png
+    - images/main_case_bg.png
+    - images/silver.png
+    - images/storefront_bg.png
+    - images/storefront_text.png
+    - images/left_scoll.png
+    - images/right_scoll.png
   # To add Flutter specific assets to your application, add an assets section,
   # like this:
   # assets:

@@ -6,21 +6,22 @@ import 'package:my_flutter/eventbus/TabViewChangeEvent.dart';
 import 'package:my_flutter/utils/ColorUtils.dart';
 
 class BaseTitleBar extends StatelessWidget {
-
   String title;
   String leftIcon = 'images/black_back.png';
   String rightIconUrl;
   String rightText;
-  final Function rightClick,leftBackClick;
+  final Function rightClick, leftBackClick;
 
   ///中间自定义控件
   Widget centerView;
 
-
   BaseTitleBar(this.title,
-      {this.leftIcon='images/black_back.png',this.leftBackClick,
-      this.rightText,this.rightIconUrl,
-      this.centerView,this.rightClick});
+      {this.leftIcon = 'images/black_back.png',
+      this.leftBackClick,
+      this.rightText,
+      this.rightIconUrl,
+      this.centerView,
+      this.rightClick});
 
   @override
   Widget build(BuildContext context) {
@@ -36,15 +37,20 @@ class BaseTitleBar extends StatelessWidget {
 //          ),
 //        ),
 //      ),
-      title:  Text(this.title,style: TextStyle(fontSize: 16,color: ColorUtils.appbarTitleColor),),
+      title:_centerTitlewidget(),
       leading: new IconButton(
         /// 左边图标，视情况而定，参数
-        icon: Image.asset(leftIcon,width: 22,height: 18,fit: BoxFit.contain,),
+        icon: Image.asset(
+          leftIcon,
+          width: 22,
+          height: 18,
+          fit: BoxFit.contain,
+        ),
         color: Colors.white,
         onPressed: () {
-          if(this.leftBackClick!=null){
+          if (this.leftBackClick != null) {
             this.leftBackClick();
-          }else{
+          } else {
             Navigator.pop(context);
           }
         },
@@ -54,135 +60,74 @@ class BaseTitleBar extends StatelessWidget {
       centerTitle: true,
       actions: <Widget>[
         /// 右边的 布局，自己可以添加，是一个widget的一个集合，自已需求添加即可，我这里写了一个Text，和text的点击事件，
-        new RightView(title: rightText,rightIconUrl: this.rightIconUrl, rightClick: rightClick),
+        new RightView(
+            title: rightText,
+            rightIconUrl: this.rightIconUrl,
+            rightClick: rightClick),
       ],
     );
+  }
+
+  Widget _centerTitlewidget(){
+    if(this.centerView!=null){
+      return this.centerView;
+    }else{
+      return Text(
+        this.title,
+        style: TextStyle(fontSize: 16, color: ColorUtils.appbarTitleColor),
+      );
+    }
   }
 }
 
 /// 中间list 布局，以及点击事件
 ///暂时不用
 class CenterFullView extends StatefulWidget {
-  List<String> titleList;
-  VoidCallback rightClick;
-  Function selectedTab;
   String defTitle;
-  EventBus eventBus;
-  CenterFullView(
-      {this.titleList, this.rightClick, this.selectedTab, this.defTitle,this.eventBus});
+  Function clickCall;
+  String iconUrl;
+  CenterFullView({this.defTitle, this.clickCall, this.iconUrl});
   @override
   State<StatefulWidget> createState() {
     // TODO: implement createState
     return CenterState(
-        title: titleList,
-        rightClick: rightClick,
-        selectedBack: this.selectedTab,
-        selectedTitle: this.defTitle,eventBus: this.eventBus);
+        defTitle: this.defTitle,
+        clickCall: this.clickCall,
+        iconUrl: this.iconUrl);
   }
 }
 
 class CenterState extends State<CenterFullView> {
-  List<String> title;
-  VoidCallback rightClick;
-  Function selectedBack;
-  Color defColor = Colors.transparent;
-  Color selColor = Colors.white;
-
-  Color defTitleColor = Colors.grey;
-  Color selTitleColor = Colors.white;
-  String selectedTitle;
-  int selectedIndex;
-  EventBus eventBus;
-
-  StreamSubscription streamSubscription;
-  CenterState(
-      {this.title, this.rightClick, this.selectedBack, this.selectedTitle,this.eventBus});
-
-  Color _titleColor(String t) {
-    if (selectedTitle == t) {
-      return this.selTitleColor;
-    } else {
-      return this.defTitleColor;
-    }
-  }
-
-  Color _underLineColor(String t) {
-    if (selectedTitle == t) {
-      return this.selColor;
-    } else {
-      return this.defColor;
-    }
-  }
-  @override
-  void dispose() {
-    // TODO: implement dispose
-    super.dispose();
-    if(streamSubscription!=null){
-      streamSubscription.cancel();
-    }
-  }
-  @override
-  void initState() {
-    // TODO: implement initState
-    selectedTitle = this.title[0];
-    super.initState();
-    streamSubscription= this.eventBus.on<TabViewChangeEvent>().listen((event) {
-      if(event.index!=this.selectedIndex){
-        print("===========eventbus========");
-        print(event.selected);
-        setState(() {
-          selectedTitle = event.selected;
-        });
-      }
-    });
-  }
+  String defTitle;
+  Function clickCall;
+  String iconUrl;
+  CenterState({this.defTitle, this.clickCall, this.iconUrl});
 
   @override
   Widget build(BuildContext context) {
     var containView;
-    if (title != null) {
-      containView = new Container(
-        alignment: Alignment.center,
-        padding: EdgeInsets.only(top: 10.0),
-        child: Row(
-          mainAxisSize: MainAxisSize.min,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: title.map((t) {
-            return GestureDetector(
-              child: Container(
-                child: Column(
-                  children: <Widget>[
-                    Text(
-                      t,
-                      style: TextStyle(fontSize: 16, color: _titleColor(t)),
-                    ),
-                    new Container(
-                      margin: EdgeInsets.only(top: 12, left: 3),
-                      height: 4,
-                      width: 50, // MediaQuery.of(context).size.width - 140,
-                      decoration: BoxDecoration(
-                          border: Border(
-                              bottom: BorderSide(
-                                  width: 0.8, color: _underLineColor(t)))
-//              border: Border.all(color: Colors.grey,width: 0.5),
-//              borderRadius: BorderRadius.circular(5),
-                          ),
-                    )
-                  ],
-                ),
-                padding: EdgeInsets.only(top: 24, right: 12),
+    if (defTitle != null) {
+      containView = GestureDetector(
+        onTap: () {this.clickCall();},
+        child: new Container(
+          alignment: Alignment.center,
+          padding: EdgeInsets.only(top: 10.0),
+          child: Row(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: <Widget>[
+              Text(
+                this.defTitle,
+                style: TextStyle(fontSize: 16, color: ColorUtils.c333333),
               ),
-              onTap: () {
-                setState(() {
-                  selectedTitle = t;
-                  selectedIndex = title.indexOf(t);
-                });
-                if (this.selectedBack != null) {
-                  this.selectedBack(t, selectedIndex);
-                }
-              },
-            );
-          }).toList(),
+             Container(margin: EdgeInsets.only(left: 8),child:  Image.asset(
+               this.iconUrl,
+               width: 10,
+               height: 8,
+               fit: BoxFit.cover,
+             ),)
+            ],
+          ),
         ),
       );
     } else {
@@ -198,7 +143,7 @@ class RightView extends StatelessWidget {
   String rightIconUrl;
   Function rightClick;
 
-  RightView({this.title, this.rightIconUrl ,this.rightClick});
+  RightView({this.title, this.rightIconUrl, this.rightClick});
 
   @override
   Widget build(BuildContext context) {
@@ -215,18 +160,20 @@ class RightView extends StatelessWidget {
           onTap: this.rightClick,
         ),
       );
-    } else if(rightIconUrl!=null){
-      containView = new GestureDetector(child: Container(
-        alignment: Alignment.center,
-        constraints: BoxConstraints(minHeight: 40),
-        padding: EdgeInsets.all(10.0),
-        child: Image.asset(this.rightIconUrl,
+    } else if (rightIconUrl != null) {
+      containView = new GestureDetector(
+        child: Container(
+          alignment: Alignment.center,
+          constraints: BoxConstraints(minHeight: 40),
+          padding: EdgeInsets.all(10.0),
+          child: Image.asset(this.rightIconUrl,
               height: 22, width: 22, fit: BoxFit.contain),
-      ), onTap: this.rightClick,);
+        ),
+        onTap: this.rightClick,
+      );
     } else {
       containView = Text("");
     }
     return containView;
-
   }
 }
