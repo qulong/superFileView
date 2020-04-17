@@ -36,6 +36,7 @@ dependencies:
   lpinyin: ^1.0.9
 
   device_info: ^0.4.1+4
+  provider: ^4.0.5
   #https://github.com/alibaba/flutter_boost/blob/master/README_CN.md
   #新一代Flutter-Native混合解决方案。 FlutterBoost是一个Flutter插件
 #  flutter_boost:

@@ -10,6 +10,7 @@ import 'package:my_flutter/xiansuo/ClueActivity.dart';
 import 'package:my_flutter/xiansuo/CustomerInfoActivity.dart';
 import 'package:my_flutter/xiansuo/InvalidCueActivity.dart';
 import 'package:my_flutter/xiansuo/TabClue.dart';
+import 'package:provider/provider.dart';
 import './Seconds.dart';
 import './RouteFlutter.dart';
 import './f_f_entity.dart';
@@ -18,8 +19,11 @@ import './MethodCallWidget2.dart';
 import './dyrs/LoginAct.dart';
 import 'package:my_flutter/utils/animationRoute.dart';
 
+import 'provider2/ProviderDemo.dart';
+
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
+  Provider.debugCheckInvalidValueType=null;
   runApp(MyApp());
 }
 
@@ -200,7 +204,8 @@ class _MyHomePageState extends State<MyHomePage> {
             ), RaisedButton(
               onPressed: (){
                 Navigator.push(context, MaterialPageRoute(builder: (ct){
-                  return ProviderD();
+                  return ProviderDemo();
+                  return ProviderD();//失败了
 //                  return AppPage();
                 }));
               },
